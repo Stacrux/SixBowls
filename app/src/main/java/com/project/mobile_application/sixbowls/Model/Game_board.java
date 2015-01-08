@@ -19,6 +19,7 @@ public class Game_board {
         Player player_two = new Player(1);
         ArrayList<Bowl_abstract> bowls_player_one = new ArrayList<Bowl_abstract>();
         ArrayList<Bowl_abstract> bowls_player_two = new ArrayList<Bowl_abstract>();
+
         for (int e = 0; e < Constants.num_bowls; e++) {
             Bowl bowl = new Bowl(Constants.seeds_initial_bowls, e);
             bowls_player_one.add(bowl);
