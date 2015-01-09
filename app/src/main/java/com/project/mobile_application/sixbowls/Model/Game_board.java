@@ -6,8 +6,10 @@ import java.util.ArrayList;
  * Created by Martino on 04/01/2015.
  */
 public class Game_board {
-    private Set_abstract set_player_one;
-    private Set_abstract set_player_two;
+
+    private Set set_player_one;
+    private Set set_player_two;
+    //boolean variable used to specify who start the game, true means player_one, false means player_two
     private boolean active_player = true;
 
     /**
@@ -17,9 +19,8 @@ public class Game_board {
         //Player(identifier expressed as integer)
         Player player_one = new Player(0);
         Player player_two = new Player(1);
-        ArrayList<Bowl_abstract> bowls_player_one = new ArrayList<Bowl_abstract>();
-        ArrayList<Bowl_abstract> bowls_player_two = new ArrayList<Bowl_abstract>();
-
+        ArrayList<Bowl> bowls_player_one = new ArrayList<Bowl>();
+        ArrayList<Bowl> bowls_player_two = new ArrayList<Bowl>();
         for (int e = 0; e < Constants.num_bowls; e++) {
             Bowl bowl = new Bowl(Constants.seeds_initial_bowls, e);
             bowls_player_one.add(bowl);
@@ -50,10 +51,11 @@ public class Game_board {
         int transit_seeds = 0;
         //beginning with player one
         if(set_player_one.is_active){
-          transit_seeds = set_player_one.inner_seeding(bowl_identifier,transit_seeds);
-          //start the seeding phase
+          transit_seeds = set_player_one.inner_seeding(bowl_identifier,transit_seeds, true);
+           //start the seeding phase
           while(transit_seeds > 0){
-            transit_seeds = set_player_one.inner_seeding(bowl_identifier,transit_seeds);
+                transit_seeds = set_player_two.inner_seeding(bowl_identifier,transit_seeds, false);
+                transit_seeds = set_player_one.inner_seeding(bowl_identifier,transit_seeds, false);
           }
           //let's check if the last bowl filled belongs to the active player,
           // in that case the seeds from the opponent are stolen
@@ -73,17 +75,18 @@ public class Game_board {
         }
         //beginning with player two
         else{
-          transit_seeds = set_player_two.inner_seeding(bowl_identifier,0);
+          transit_seeds = set_player_two.inner_seeding(bowl_identifier,0, true);
           //start the seeding phase
           while(transit_seeds > 0){
-            transit_seeds = set_player_two.inner_seeding(bowl_identifier,transit_seeds);
+            transit_seeds = set_player_one.inner_seeding(bowl_identifier,transit_seeds, false);
+            transit_seeds = set_player_two.inner_seeding(bowl_identifier,transit_seeds, false);
           }
             //let's check if the last bowl filled belongs to the active player,
             // in that case the seeds from the opponent are stolen
             if(set_player_two.last_bowl_filled_id > -1){
                 //now let's check if it contained zero seeds before it has been filled
                 int last_bowl_id = set_player_two.last_bowl_filled_id;
-                Bowl_abstract last_bowl = set_player_two.bowls.get(last_bowl_id);
+                Bowl last_bowl = set_player_two.bowls.get(last_bowl_id);
                 if( last_bowl.getNum_seeds() == 1 ){
                     set_player_two.tray.increase_seeds_count(1);
                     last_bowl.remove_whole_content();
@@ -122,12 +125,12 @@ public class Game_board {
         //winner = -1, game still running
         int winner = -1;
         //let's check if there is a Set with all the bowls empty
-        for(Bowl_abstract bowl : set_player_one.bowls){
+        for(Bowl bowl : set_player_one.bowls){
            if(bowl.getNum_seeds() > 0){
               game_is_over = false;
            }
         }
-        for(Bowl_abstract bowl : set_player_two.bowls){
+        for(Bowl bowl : set_player_two.bowls){
           if(bowl.getNum_seeds() > 0){
             game_is_over = false;
           }
@@ -135,20 +138,27 @@ public class Game_board {
         //if the game is actually over we need to move all the remaining
         //seeds in the correct tray
         if(game_is_over){
-            for(Bowl_abstract bowl : set_player_one.bowls){
+            for(Bowl bowl : set_player_one.bowls){
                 set_player_one.tray.increase_seeds_count(bowl.getNum_seeds());
                 bowl.remove_whole_content();
                 }
-            for(Bowl_abstract bowl : set_player_two.bowls){
+            for(Bowl bowl : set_player_two.bowls){
                 set_player_two.tray.increase_seeds_count(bowl.getNum_seeds());
                 bowl.remove_whole_content();
             }
         }
-        if(game_is_over && set_player_one.tray.seeds > set_player_two.tray.seeds){ winner = 0;}
-        else if(game_is_over && set_player_one.tray.seeds < set_player_two.tray.seeds){ winner = 1;}
+        if(game_is_over && set_player_one.tray.number_of_seeds > set_player_two.tray.number_of_seeds){ winner = 0;}
+        else if(game_is_over && set_player_one.tray.number_of_seeds < set_player_two.tray.number_of_seeds){ winner = 1;}
         //let's check if there is no winner, it's a tie
-        else if(game_is_over && game_is_over && set_player_one.tray.seeds == set_player_two.tray.seeds){ winner = 2;}
+        else if(game_is_over && game_is_over && set_player_one.tray.number_of_seeds == set_player_two.tray.number_of_seeds){ winner = 2;}
         return winner;
     }
 
+
+    public Set getSet_player_two() {
+        return set_player_two;
+    }
+    public Set getSet_player_one() {
+        return set_player_one;
+    }
 }

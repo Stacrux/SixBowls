@@ -8,9 +8,17 @@ import java.util.ArrayList;
  * and has the method for the "seeding" move within itself (so not passing through other players' sets)
  *
  */
-public class Set extends Set_abstract {
+public class Set implements Set_interface {
 
-    public Set(Player player, ArrayList<Bowl_abstract> bowls, Tray tray, boolean is_active ){
+    protected Player player;
+    protected ArrayList<Bowl> bowls;
+    protected Tray tray;
+    protected int seeds_moving;
+    protected boolean is_active;
+    protected boolean will_be_active = false;
+    protected int last_bowl_filled_id = -1;
+
+    public Set(Player player, ArrayList<Bowl> bowls, Tray tray, boolean is_active ){
         this.bowls = bowls;
         this.player = player;
         this.tray = tray;
@@ -23,23 +31,26 @@ public class Set extends Set_abstract {
      * he gain an additional turn.
      * @param bowl_identifier : the bowl where the seeding move starts
      * @param seeds_moving : number of seeds currently picked up
+     * @param first_step : indicate if this is the first step of a seeding phase or it is a step inside a loop
      * @return : the seeds that are still pending to be dropped (this will be thrown to the next Set)
      */
     @Override
-    public int inner_seeding(int bowl_identifier, int seeds_moving) {
+    public int inner_seeding(int bowl_identifier, int seeds_moving, boolean first_step) {
         //save the number of moving seeds that will be returned, for being moved in the next set
         this.seeds_moving = seeds_moving;
         //if : is this the set of the active player (the one who chose the move) ?
         if( is_active ){
             //let's pick up the whole content of the selected bowl
-            for(Bowl_abstract bowl : this.bowls){
-                if( bowl.getBowl_identifier() == bowl_identifier ){
-                    this.seeds_moving = bowl.getNum_seeds();
-                    bowl.remove_whole_content();
+            if(first_step) {
+                for (Bowl bowl : this.bowls) {
+                    if (bowl.getBowl_identifier() == bowl_identifier) {
+                        this.seeds_moving = bowl.getNum_seeds();
+                        bowl.remove_whole_content();
+                    }
                 }
             }
             //and drop it in the NEXT bowls
-            for(Bowl_abstract bowl : this.bowls){
+            for(Bowl bowl : this.bowls){
                 if( bowl.getBowl_identifier() > bowl_identifier && seeds_moving > 0){
                     bowl.increment_seed_count(1);
                     this.seeds_moving -= 1;
@@ -57,9 +68,9 @@ public class Set extends Set_abstract {
             }
         }
         //otherwise this is the set of the inactive player, in this case the value seeds_moving come from a past method
-        else{
+        else if(!is_active){
             //let's drop the seeds in the bowls
-            for(Bowl_abstract bowl : this.bowls){
+            for(Bowl bowl : this.bowls){
                 if( bowl.getBowl_identifier() >= bowl_identifier && seeds_moving > 0){
                     bowl.increment_seed_count(1);
                     this.seeds_moving -= 1;

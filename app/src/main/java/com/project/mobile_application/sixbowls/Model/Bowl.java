@@ -1,34 +1,42 @@
 package com.project.mobile_application.sixbowls.Model;
 
 /**
- * Created by mattia on 17/11/2014.
+ * Created by Mattia on 17/11/2014.
  */
-public class Bowl extends Bowl_abstract {
+public class Bowl implements Bowl_interface {
 
-    public int getBowl_identifier() {
-        return bowl_identifier;
-    }
 
+    protected int number_of_seeds;
     private int bowl_identifier;
-    //= Constants.seeds_initial_bowls;
 
     public Bowl(int num_seeds, int bowl_identifier)
     {
         this.bowl_identifier = bowl_identifier;
-        this.num_seeds = num_seeds;
+        this.number_of_seeds = num_seeds;
+    }
+    public int getBowl_identifier() { return bowl_identifier; }
+    public int getNum_seeds() {
+        return number_of_seeds;
     }
 
+
+    /**
+     * method for increasing the number of seeds inside a bowl
+     * @param amount : the number of seeds that the caller wants to put in the bowl
+     */
     @Override
     public void increment_seed_count(int amount) {
-        num_seeds += amount;
+        number_of_seeds += amount;
     }
 
+    /**
+     * method for removing all the seeds inside a bowl, set the content to zero
+     */
     @Override
     public void remove_whole_content() {
-        num_seeds = 0;
+        number_of_seeds = 0;
     }
 
-    public int getNum_seeds() {
-        return num_seeds;
-    }
+
+
 }
