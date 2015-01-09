@@ -19,6 +19,7 @@ public class GameBoardFactory {
 
     public GameBoard getGameBoard(String configuration){
 
+        int i =1;
         GameBoard gameboard = null;
 
         if( configuration.equals("STANDARD")){
