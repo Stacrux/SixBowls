@@ -7,7 +7,7 @@ import junit.framework.TestCase;
  */
 public class Game_boardTest extends TestCase {
 
-    Game_board board;
+    GameBoard board;
     int[]b1=new int[6];
     int[]b2=new int[6];
     int t1;
@@ -55,9 +55,9 @@ public class Game_boardTest extends TestCase {
         assertEquals(lastbowl,x);
     }
 
-    private Game_board inizialization(int[] b1, int[] b2) {
+    private GameBoard inizialization(int[] b1, int[] b2) {
 
-        board=new Game_board();
+        board=new GameBoard();
         return board;
     }
 

@@ -5,10 +5,10 @@ package com.project.mobile_application.sixbowls.Model;
  */
 public class Constants {
 
-    public static int seeds_initial_bowls=3;
-    public static int seeds_initial_tray=0;
-    public static int number_player=2;
-    public static int num_bowls=6;
+    public static int initialBowlContent =3;
+    public static int initialTrayContent =0;
+    public static int numberOfPlayers =2;
+    public static int numberOfBowls =6;
 
 
 
