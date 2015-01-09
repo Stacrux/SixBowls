@@ -1,4 +1,6 @@
-package com.project.mobile_application.sixbowls.Model;
+package com.project.mobile_application.sixbowls.Model.StandardGame;
+
+import com.project.mobile_application.sixbowls.Model.Tray;
 
 /**
  * Created by mattia on 17/11/2014.

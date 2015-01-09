@@ -9,7 +9,7 @@ public class GameBoard {
     private PersonalSet setPlayerTwo;
 
     /**
-     * Constructor of the class, it create two sets MODIFICA
+     * Constructor of the class, it create two sets
      */
     public GameBoard(PersonalSet setPlayerOne, PersonalSet setPlayerTwo){
         this.setPlayerOne = setPlayerOne;

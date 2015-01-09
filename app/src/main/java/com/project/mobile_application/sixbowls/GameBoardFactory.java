@@ -1,14 +1,14 @@
 package com.project.mobile_application.sixbowls;
 
 import com.project.mobile_application.sixbowls.Model.Bowl;
-import com.project.mobile_application.sixbowls.Model.BowlStandard;
+import com.project.mobile_application.sixbowls.Model.StandardGame.BowlStandard;
 import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
 import com.project.mobile_application.sixbowls.Model.PersonalSet;
-import com.project.mobile_application.sixbowls.Model.PersonalSetStandard;
+import com.project.mobile_application.sixbowls.Model.StandardGame.PersonalSetStandard;
 import com.project.mobile_application.sixbowls.Model.Player;
 import com.project.mobile_application.sixbowls.Model.Tray;
-import com.project.mobile_application.sixbowls.Model.TrayStandard;
+import com.project.mobile_application.sixbowls.Model.StandardGame.TrayStandard;
 
 import java.util.ArrayList;
 
