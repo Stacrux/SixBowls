@@ -22,7 +22,7 @@ public class PersonalSetStandard implements PersonalSet {
     //the field active indicates if this set belongs to the active player, the one playing
     //during the turn
     private boolean active;
-    private boolean will_be_active = false;
+    private boolean lastSeedInTray = false;
     private boolean lastBowlEmpty = false;
     private int lastBowlIdentifier = 0;
 
@@ -40,6 +40,17 @@ public class PersonalSetStandard implements PersonalSet {
     @Override
     public boolean isActive(){
         return active;
+    }
+
+    /**
+     * method that reveal if the last seed was dropped in the tray. It also reset to "false" the boolean
+     * @return : true if last seed was dropped in the tray, false otherwise
+     */
+    @Override
+    public boolean isLastSeedInTraY() {
+        boolean resetCondition = lastSeedInTray;
+        lastSeedInTray = false;
+        return resetCondition;
     }
 
     /**
@@ -112,6 +123,15 @@ public class PersonalSetStandard implements PersonalSet {
     }
 
     /**
+     * setter for parameter active, it depends on the other set state so must be setted outside this set
+     * @param nextState : next state this set will be
+     */
+    @Override
+    public void setActive(boolean nextState) {
+        active = nextState;
+    }
+
+    /**
      * This method is used for moving seeds within a Set. (A Set is a collection of six bowls and one tray connected to
      * a specific player). Here is also applied the rule stating that if the active player ends its turn into its own tray
      * he gain an additional turn.
@@ -124,7 +144,7 @@ public class PersonalSetStandard implements PersonalSet {
         //save the number of moving seeds that will be returned, for being moved in the next set
         int seedsMovingTemp = seedsMoving;
         //if : is this the set of the active player (the one who chose the move) ?
-        if( active && seedsMoving != 0){
+        if( active && seedsMovingTemp != 0){
             //drop one seed inside each NEXT bowl
             for(int e  = 0 ; e < Constants.numberOfBowls; e++){
                 if( bowls.get(e).getBowlIdentifier() > bowlIdentifier && seedsMoving > 0){
@@ -134,22 +154,21 @@ public class PersonalSetStandard implements PersonalSet {
                     //let's check also if the last filled bowl contains just 1 seed, in that case
                     //it means that before contained ZERO seeds. This need to be done only for the
                     //active Set
-                    if(seedsMoving == 0 && bowls.get(e).getNum_seeds() == 1){
+                    if(seedsMovingTemp == 0 && bowls.get(e).getNum_seeds() == 1){
                         lastBowlIdentifier = e;
                         lastBowlEmpty = true;
                     }
                 }
             }
-            will_be_active = false;
             //and in the tray as well (only if any seed is available)
-            if(seedsMoving > 0){
+            if(seedsMovingTemp > 0){
                 tray.increase_seeds_count(1);
-                seedsMoving -= 1;
-                if(seedsMoving == 0){ will_be_active = true; }
+                seedsMovingTemp -= 1;
+                if(seedsMovingTemp == 0){ lastSeedInTray = true; }
             }
         }
         //otherwise this is the set of the inactive player
-        else if(!active && seedsMoving != 0){
+        else if(!active && seedsMovingTemp != 0){
             //let's drop the seeds in the bowls
             for(Bowl bowl : this.bowls){
                 if( bowl.getBowlIdentifier() >= bowlIdentifier && seedsMoving > 0){
@@ -157,17 +176,7 @@ public class PersonalSetStandard implements PersonalSet {
                     seedsMovingTemp -= 1;
                 }
             }
-            will_be_active = true;
         }
-        //note: will_be_active is true when :
-        //the Set is the active one and the seeding ENDS in its tray
-        //the Set is the inactive one
-        if( will_be_active && seedsMoving == 0 ){
-            active = true;
-        }else if( !will_be_active && seedsMoving == 0 ){
-            active = false;
-        }
-
         return seedsMovingTemp;
     }
 
@@ -181,20 +190,16 @@ public class PersonalSetStandard implements PersonalSet {
      */
     @Override
     public String toString(){
-        String configuration = new String();
+        String configuration = new String("");
         if(this.isActive()){
-            configuration.concat("1");
+            configuration += "1";
         }else{
-            configuration.concat("0");
+            configuration += "0";
         }
         for(int e = 0; e < Constants.numberOfBowls; e++){
-            //configuration += Integer.toString(this.bowls.get(e).getNum_seeds();
-            configuration.concat("B");
-            configuration.concat(Integer.toString(this.bowls.get(e).getNum_seeds()));
+            configuration = configuration + "B" + Integer.toString(this.bowls.get(e).getNum_seeds());
         }
-        //configuration += Integer.toString(this.tray.getSeeds();
-        configuration.concat("T");
-        configuration.concat(Integer.toString(this.tray.getSeeds()));
+        configuration = configuration + "B" + Integer.toString(this.tray.getSeeds());
         return configuration;
     }
 

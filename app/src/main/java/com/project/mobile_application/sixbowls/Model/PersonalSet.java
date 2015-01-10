@@ -25,6 +25,12 @@ public interface PersonalSet {
     public boolean isActive();
 
     /**
+     * method that reveal if the last seed was dropped in the tray
+     * @return : true if last seed was dropped in the tray, false otherwise
+     */
+    public boolean isLastSeedInTraY();
+
+    /**
      * this method checks all the bowls in this set and return true if they are empty
      * @return : true if every bowl contains no seeds, false otherwise
      */
@@ -64,9 +70,10 @@ public interface PersonalSet {
      */
     public int getSeedsTray();
 
+
     /**
-     * @return : the string with the current configuration of this set
-     * using this format : B1B2B3B4B5B6T1
+     * setter for parameter active, it depends on the other set state so must be setted outside this set
+     * @param nextState : next state this set will be
      */
-    public String toString();
+    public void setActive(boolean nextState);
 }
