@@ -122,8 +122,10 @@ public class GameBoard {
     @Override
     public String toString() {
         String configuration = new String();
-        configuration.concat(setPlayerOne.toString());
-        configuration.concat(setPlayerTwo.toString());
+
+        configuration=configuration+setPlayerOne.toString();
+        configuration=configuration+setPlayerTwo.toString();
+
         return configuration;
     }
 }

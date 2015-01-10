@@ -65,7 +65,7 @@ public class GameBoardTest extends TestCase {
 
     }*/
 
-    public void testSeedingPhase() throws Exception {
+    public void testSeedingPhase(){
 
         gameboard=new GameBoard(setPlayerOne,setPlayerTwo);
         gameboard.seedingPhase(2);
@@ -76,7 +76,14 @@ public class GameBoardTest extends TestCase {
         //verifichiamo
 
         String confExpectation="0B3B3B0B4B4B4T01B3B3B3B3B3B3T0";
-        String conf=gameboard.toString();
+        String conf=null;
+        try {
+            conf = gameboard.toString();
+        }catch(Exception e){
+            e.printStackTrace();
+            fail();
+        }
+
         assertEquals(conf,confExpectation);
     }
 
