@@ -1,5 +1,7 @@
 package com.project.mobile_application.sixbowls.Model;
 
+import android.util.Log;
+
 /**
  * Created by Martino on 04/01/2015.
  */

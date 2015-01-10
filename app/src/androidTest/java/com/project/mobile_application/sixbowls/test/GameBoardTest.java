@@ -1,5 +1,7 @@
 package com.project.mobile_application.sixbowls.test;
 
+import android.util.Log;
+
 import com.project.mobile_application.sixbowls.Model.Bowl;
 import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
@@ -65,12 +67,17 @@ public class GameBoardTest extends TestCase {
 
     public void testSeedingPhase() throws Exception {
 
-        int i=2;
         gameboard=new GameBoard(setPlayerOne,setPlayerTwo);
         gameboard.seedingPhase(2);
 
-        assertEquals(2,2);
+        //     3 3 3 3 3 3
+        //    0           0
+        //     3 3 0 4 4 4
+        //verifichiamo
 
+        String confExpectation="0B3B3B0B4B4B4T01B3B3B3B3B3B3T0";
+        String conf=gameboard.toString();
+        assertEquals(conf,confExpectation);
     }
 
     /*
