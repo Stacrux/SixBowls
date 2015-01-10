@@ -176,9 +176,11 @@ public class PersonalSetStandard implements PersonalSet {
         String configuration = new String();
         for(int e = 0; e < Constants.numberOfBowls; e++){
             //configuration += Integer.toString(this.bowls.get(e).getNum_seeds();
+            configuration.concat("B");
             configuration.concat(Integer.toString(this.bowls.get(e).getNum_seeds()));
         }
         //configuration += Integer.toString(this.tray.getSeeds();
+        configuration.concat("T");
         configuration.concat(Integer.toString(this.tray.getSeeds()));
         return configuration;
     }
