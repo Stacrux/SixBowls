@@ -24,7 +24,10 @@ import java.util.ArrayList;
 public class GameBoardTest extends TestCase {
 
     private GameBoard gameboard;
+    private GameFactoryFromString gameFactory;
 
+
+    /*
     private PersonalSet setPlayerOne;
     private PersonalSet setPlayerTwo;
     private Player playerOne;
@@ -32,13 +35,13 @@ public class GameBoardTest extends TestCase {
     private ArrayList<Bowl> bowlsOne;
     private ArrayList<Bowl> bowlsTwo;
     private Tray trayOne;
-    private Tray trayTwo;
+    private Tray trayTwo;*/
 
 
     @Override
     protected void setUp() throws Exception{
        super.setUp();
-
+      /*
        boolean active = true;
        playerOne=new Player(0);
        bowlsOne=new ArrayList<Bowl>();
@@ -50,7 +53,9 @@ public class GameBoardTest extends TestCase {
        bowlsTwo=new ArrayList<Bowl>();
        setBowls(bowlsTwo);
        trayTwo=new TrayStandard(0);
-       setPlayerTwo=new PersonalSetStandard(playerTwo,bowlsTwo,trayTwo,!active);
+       setPlayerTwo=new PersonalSetStandard(playerTwo,bowlsTwo,trayTwo,!active);*/
+       gameFactory=new GameFactoryFromString();
+
     }
 
     private void setBowls(ArrayList<Bowl> bowls) {
@@ -68,7 +73,7 @@ public class GameBoardTest extends TestCase {
 
     public void testSeedingPhase(){
 
-        gameboard=new GameBoard(setPlayerOne,setPlayerTwo);
+        gameboard = gameFactory.generateBoard("0B3B3B0B4B4B4T01B3B3B3B3B3B3T0"); //new GameBoard(setPlayerOne,setPlayerTwo);
         gameboard.seedingPhase(2);
 
         //     3 3 3 3 3 3
