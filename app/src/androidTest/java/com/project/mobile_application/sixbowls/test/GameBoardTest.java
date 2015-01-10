@@ -39,17 +39,18 @@ public class GameBoardTest extends TestCase {
     protected void setUp() throws Exception{
        super.setUp();
 
+       boolean active = true;
        playerOne=new Player(0);
        bowlsOne=new ArrayList<Bowl>();
        setBowls(bowlsOne);
        trayOne=new TrayStandard(0);
-       setPlayerOne=new PersonalSetStandard(playerOne,bowlsOne,trayOne,true);
+       setPlayerOne=new PersonalSetStandard(playerOne,bowlsOne,trayOne,active);
 
        playerTwo=new Player(1);
        bowlsTwo=new ArrayList<Bowl>();
        setBowls(bowlsTwo);
        trayTwo=new TrayStandard(0);
-       setPlayerTwo=new PersonalSetStandard(playerTwo,bowlsTwo,trayTwo,false);
+       setPlayerTwo=new PersonalSetStandard(playerTwo,bowlsTwo,trayTwo,!active);
     }
 
     private void setBowls(ArrayList<Bowl> bowls) {
@@ -76,15 +77,15 @@ public class GameBoardTest extends TestCase {
         //verifichiamo
 
         String confExpectation="0B3B3B0B4B4B4T01B3B3B3B3B3B3T0";
-        String conf=null;
+        String actualOutput="";
         try {
-            conf = gameboard.toString();
+            actualOutput = gameboard.toString();
         }catch(Exception e){
             e.printStackTrace();
             fail();
         }
 
-        assertEquals(conf,confExpectation);
+        assertEquals(confExpectation, actualOutput);
     }
 
     /*

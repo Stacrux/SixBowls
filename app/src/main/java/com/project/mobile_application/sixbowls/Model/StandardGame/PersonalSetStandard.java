@@ -190,7 +190,7 @@ public class PersonalSetStandard implements PersonalSet {
      */
     @Override
     public String toString(){
-        String configuration = new String("");
+        String configuration = "";
         if(this.isActive()){
             configuration += "1";
         }else{
@@ -199,7 +199,7 @@ public class PersonalSetStandard implements PersonalSet {
         for(int e = 0; e < Constants.numberOfBowls; e++){
             configuration = configuration + "B" + Integer.toString(this.bowls.get(e).getNum_seeds());
         }
-        configuration = configuration + "B" + Integer.toString(this.tray.getSeeds());
+        configuration = configuration + "T" + Integer.toString(this.tray.getSeeds());
         return configuration;
     }
 

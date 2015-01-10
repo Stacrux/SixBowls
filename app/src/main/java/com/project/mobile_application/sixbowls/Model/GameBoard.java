@@ -41,14 +41,14 @@ public class GameBoard {
 
         //beginning the seeding phase with player one
         if( setPlayerOne.isActive() ){
-           seedMoving = setPlayerOne.innerSeeding(bowlIdentifier + 1, seedMoving);
+           seedMoving = setPlayerOne.innerSeeding(bowlIdentifier, seedMoving);
            //start the seeding loop
           while(seedMoving > 0){
                 seedMoving = setPlayerTwo.innerSeeding(0,seedMoving);
                 seedMoving = setPlayerOne.innerSeeding(0,seedMoving);
           }
           //assign the next active state
-          if( !setPlayerOne.isLastBowlEmpty()){
+          if( !setPlayerOne.isLastSeedInTraY()){
               setPlayerOne.setActive(false);
               setPlayerTwo.setActive(true);
           }
@@ -65,14 +65,14 @@ public class GameBoard {
         }
         //beginning with player two
         else{
-            seedMoving = setPlayerTwo.innerSeeding(bowlIdentifier + 1, seedMoving);
+            seedMoving = setPlayerTwo.innerSeeding(bowlIdentifier, seedMoving);
             //start the seeding phase
             while(seedMoving > 0){
                 seedMoving = setPlayerOne.innerSeeding(0,seedMoving);
                 seedMoving = setPlayerTwo.innerSeeding(0,seedMoving);
             }
             //assign the next active state
-            if( !setPlayerTwo.isLastBowlEmpty()){
+            if( !setPlayerTwo.isLastSeedInTraY()){
                 setPlayerTwo.setActive(false);
                 setPlayerOne.setActive(true);
             }
@@ -137,7 +137,7 @@ public class GameBoard {
      */
     @Override
     public String toString() {
-        String configuration = new String();
+        String configuration = new String("");
 
         configuration=configuration+setPlayerOne.toString();
         configuration=configuration+setPlayerTwo.toString();
