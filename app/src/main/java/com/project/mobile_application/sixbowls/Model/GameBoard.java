@@ -11,6 +11,7 @@ public class GameBoard {
     /**
      * Constructor of the class, it create two sets
      */
+
     public GameBoard(PersonalSet setPlayerOne, PersonalSet setPlayerTwo){
         this.setPlayerOne = setPlayerOne;
         this.setPlayerTwo = setPlayerTwo;
