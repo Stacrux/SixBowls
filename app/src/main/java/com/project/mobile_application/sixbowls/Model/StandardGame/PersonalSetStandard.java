@@ -171,9 +171,22 @@ public class PersonalSetStandard implements PersonalSet {
         return seedsMovingTemp;
     }
 
+
+    /**
+     * @return : the string with the current configuration of this set
+     * using this format : YBXBXBXBXBXBXTX
+     * Y : 1 if this set is active, else is 0
+     * BX : "B" stands for Bowl, X is its content (integer)
+     * TX : T stands for Tray, X is its content
+     */
     @Override
     public String toString(){
         String configuration = new String();
+        if(this.isActive()){
+            configuration.concat("1");
+        }else{
+            configuration.concat("0");
+        }
         for(int e = 0; e < Constants.numberOfBowls; e++){
             //configuration += Integer.toString(this.bowls.get(e).getNum_seeds();
             configuration.concat("B");

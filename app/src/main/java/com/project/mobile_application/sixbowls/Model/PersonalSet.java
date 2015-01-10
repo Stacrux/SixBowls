@@ -64,6 +64,9 @@ public interface PersonalSet {
      */
     public int getSeedsTray();
 
-
+    /**
+     * @return : the string with the current configuration of this set
+     * using this format : B1B2B3B4B5B6T1
+     */
     public String toString();
 }

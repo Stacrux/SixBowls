@@ -115,7 +115,7 @@ public class GameBoard {
     /**
      * return the current configuration of the gameboard, starting with player one set
      * @return : the string with the current configuration of the gameboard
-     * usign this format : B1B2B3B4B5B6T1B1B2B3B4B5B6T2
+     * using this format : YB1B2B3B4B5B6T1YB1B2B3B4B5B6T2
      */
     @Override
     public String toString() {
