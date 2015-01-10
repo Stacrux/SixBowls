@@ -47,6 +47,12 @@ public class GameBoard {
                 seedMoving = setPlayerTwo.innerSeeding(0,seedMoving);
                 seedMoving = setPlayerOne.innerSeeding(0,seedMoving);
           }
+          //assign the next active state
+          if( !setPlayerOne.isLastBowlEmpty()){
+              setPlayerOne.setActive(false);
+              setPlayerTwo.setActive(true);
+          }
+
           //let's check if the last bowl filled belongs to the active player,
           // in that case the seeds from the opponent are stolen
           if( setPlayerOne.isLastBowlEmpty()){
@@ -65,6 +71,11 @@ public class GameBoard {
                 seedMoving = setPlayerOne.innerSeeding(0,seedMoving);
                 seedMoving = setPlayerTwo.innerSeeding(0,seedMoving);
             }
+            //assign the next active state
+            if( !setPlayerTwo.isLastBowlEmpty()){
+                setPlayerTwo.setActive(false);
+                setPlayerOne.setActive(true);
+            }
             //let's check if the last bowl filled belongs to the active player,
             // in that case the seeds from the opponent are stolen
             if( setPlayerTwo.isLastBowlEmpty()){
@@ -75,6 +86,11 @@ public class GameBoard {
                 setPlayerTwo.moveDirectlyToTray(seedMoving);
             }
         }
+
+        if( setPlayerOne.isActive() ){
+
+        }
+
     }
 
     /**
