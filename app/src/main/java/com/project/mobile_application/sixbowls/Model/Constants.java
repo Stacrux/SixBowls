@@ -10,6 +10,4 @@ public class Constants {
     public static int numberOfPlayers =2;
     public static int numberOfBowls =6;
 
-
-
 }

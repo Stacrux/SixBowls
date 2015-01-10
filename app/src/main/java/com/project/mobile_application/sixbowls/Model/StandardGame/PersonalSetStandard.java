@@ -170,4 +170,17 @@ public class PersonalSetStandard implements PersonalSet {
 
         return seedsMovingTemp;
     }
+
+    @Override
+    public String toString(){
+        String configuration = new String();
+        for(int e = 0; e < Constants.numberOfBowls; e++){
+            //configuration += Integer.toString(this.bowls.get(e).getNum_seeds();
+            configuration.concat(Integer.toString(this.bowls.get(e).getNum_seeds()));
+        }
+        //configuration += Integer.toString(this.tray.getSeeds();
+        configuration.concat(Integer.toString(this.tray.getSeeds()));
+        return configuration;
+    }
+
 }

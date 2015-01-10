@@ -63,4 +63,7 @@ public interface PersonalSet {
      * (this will be checked for establishing who won the game)
      */
     public int getSeedsTray();
+
+
+    public String toString();
 }
