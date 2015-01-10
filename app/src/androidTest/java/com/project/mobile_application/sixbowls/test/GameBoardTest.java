@@ -27,61 +27,52 @@ public class GameBoardTest extends TestCase {
     private GameFactoryFromString gameFactory;
 
 
-    /*
-    private PersonalSet setPlayerOne;
-    private PersonalSet setPlayerTwo;
-    private Player playerOne;
-    private Player playerTwo;
-    private ArrayList<Bowl> bowlsOne;
-    private ArrayList<Bowl> bowlsTwo;
-    private Tray trayOne;
-    private Tray trayTwo;*/
-
-
     @Override
     protected void setUp() throws Exception{
        super.setUp();
-      /*
-       boolean active = true;
-       playerOne=new Player(0);
-       bowlsOne=new ArrayList<Bowl>();
-       setBowls(bowlsOne);
-       trayOne=new TrayStandard(0);
-       setPlayerOne=new PersonalSetStandard(playerOne,bowlsOne,trayOne,active);
-
-       playerTwo=new Player(1);
-       bowlsTwo=new ArrayList<Bowl>();
-       setBowls(bowlsTwo);
-       trayTwo=new TrayStandard(0);
-       setPlayerTwo=new PersonalSetStandard(playerTwo,bowlsTwo,trayTwo,!active);*/
        gameFactory=new GameFactoryFromString();
 
     }
 
-    private void setBowls(ArrayList<Bowl> bowls) {
-
-        for (int e = 0; e < Constants.numberOfBowls; e++) {
-            BowlStandard bowl = new BowlStandard(Constants.initialBowlContent, e);
-            bowls.add(bowl);
-        }
-    }
-
-
-      /*private void testFromStringConfiguration(char[] inputConfiguration) {
+   /*private void testFromStringConfiguration(char[] inputConfiguration) {
 
     }*/
 
-    public void testSeedingPhase(){
 
-        gameboard = gameFactory.generateBoard("0B3B3B0B4B4B4T01B3B3B3B3B3B3T0"); //new GameBoard(setPlayerOne,setPlayerTwo);
+
+
+    /**
+     *
+     * @ the configuration is a string of type YBXBXBXBXBXBXTX Z YBXBXBXBXBXBXTX
+     */
+     public void testSeedingPhase(){
+
+        gameboard = gameFactory.generateBoard("1B3B3B3B10B3B3T10Z0B3B3B3B3B3B3T0");
         gameboard.seedingPhase(2);
 
-        //     3 3 3 3 3 3
-        //    0           0
-        //     3 3 0 4 4 4
-        //verifichiamo
+        // 3 3 3 10 3 3   10   /    3 3 3 3 3 3 3 0  ( configuration )
+        // 3 3 0 11 4 4   10   /    3 3 3 3 3 3 3 0  ( expettation )
+        String confExpectation="0B3B3B0B11B4B4T10Z1B3B3B3B3B3B3T0";
+        String actualOutput="";
+        try {
+            actualOutput = gameboard.toString();
+        }catch(Exception e){
+            e.printStackTrace();
+            fail();
+        }
 
-        String confExpectation="0B3B3B0B4B4B4T01B3B3B3B3B3B3T0";
+        assertEquals(confExpectation, actualOutput);
+    }
+
+    public void testSeedingPhase1(){
+
+        gameboard = gameFactory.generateBoard("0B3B3B3B3B3B3T0Z1B3B3B3B3B3B3T0");
+        gameboard.seedingPhase(3);
+
+        // 3 3 3 3 3 3    0   /    3 3 3 3 3 3   0  ( configuration ) active player 1
+        // 3 3 3 3 3 3    0   /    3 3 3 0 4 4   1  ( expettation   ) active player 1
+        // bowlId  3
+        String confExpectation="0B3B3B3B3B3B3T0Z1B3B3B3B0B4B4T1";
         String actualOutput="";
         try {
             actualOutput = gameboard.toString();

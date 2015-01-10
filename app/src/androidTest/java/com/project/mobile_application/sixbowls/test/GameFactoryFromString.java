@@ -36,34 +36,36 @@ public class GameFactoryFromString {
 
     /**
      *
-     * @param configuration : a string of type YBXBXBXBXBXBXTX yBxBxBxBxBxBxTx
+     * @param configuration : a string of type YBXBXBXBXBXBXTX Z YBxBxBxBxBxBxTx
      */
     public GameBoard generateBoard(String configuration){
 
         boolean active;
+        int middle=configuration.indexOf("Z");
+        String firstMiddle=configuration.substring(0,middle);
+        String secondMiddle=configuration.substring(middle+1,configuration.length());
 
-        if(configuration.charAt(0)==1)
+        if(Integer.parseInt(""+firstMiddle.charAt(0))==1)
             active=true;
         else
              active=false;
 
         playerOne=new Player(0);
 
-        String sub=configuration.substring(1,6);
         bowlsOne=new ArrayList<Bowl>();
-        setBowls(bowlsOne,sub);
-        trayOne=new TrayStandard(configuration.charAt(7));
+        setBowls(bowlsOne,firstMiddle);
+        trayOne=new TrayStandard(Integer.parseInt(""+firstMiddle.substring(firstMiddle.indexOf("T")+1,firstMiddle.length())));
         setPlayerOne=new PersonalSetStandard(playerOne,bowlsOne,trayOne,active);
 
-        if(configuration.charAt(8)==1)
-            active=true;
-        else
-            active=false;
-        sub=configuration.substring(9,14);
+            if(Integer.parseInt(""+secondMiddle.charAt(0))==1)
+              active=true;
+            else
+              active=false;
+
         playerTwo=new Player(1);
         bowlsTwo=new ArrayList<Bowl>();
-        setBowls(bowlsTwo,sub);
-        trayTwo=new TrayStandard(configuration.charAt(15));
+        setBowls(bowlsTwo,secondMiddle);
+        trayTwo=new TrayStandard(0);
         setPlayerTwo=new PersonalSetStandard(playerTwo,bowlsTwo,trayTwo,active);
 
         gameboard=new GameBoard(setPlayerOne,setPlayerTwo);
@@ -71,9 +73,32 @@ public class GameFactoryFromString {
         return gameboard;
     }
 
+
+
     private void setBowls(ArrayList<Bowl> bowls,String sub) {
+
+        int[]bowlTemp= new int[6];
+        int x=-1;
+
+        sub=sub.substring(2,sub.length());
+        for(int i=0;i<5;i++){
+          x=sub.indexOf("B")-1;
+          if(x==0)
+              bowlTemp[i]=  Integer.parseInt(""+sub.charAt(x));
+          else
+            bowlTemp[i]=Integer.parseInt(sub.substring(0,x+1));
+          sub=sub.substring(sub.indexOf("B")+1,sub.length());
+        }
+
+        x=sub.indexOf("T")-1;
+        if(x==0)
+            bowlTemp[5]= Integer.parseInt(""+sub.charAt(x));
+        else
+            bowlTemp[5]=Integer.parseInt(sub.substring(0,x+1));
+
+
         for (int e = 0; e < Constants.numberOfBowls; e++) {
-            BowlStandard bowl = new BowlStandard(sub.charAt(e), e);
+            BowlStandard bowl = new BowlStandard(bowlTemp[e], e);
             bowls.add(bowl);
         }
     }

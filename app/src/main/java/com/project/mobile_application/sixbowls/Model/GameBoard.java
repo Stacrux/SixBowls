@@ -133,13 +133,14 @@ public class GameBoard {
     /**
      * return the current configuration of the gameboard, starting with player one set
      * @return : the string with the current configuration of the gameboard
-     * using this format : YB1B2B3B4B5B6T1YB1B2B3B4B5B6T2
+     * using this format : YB1B2B3B4B5B6T1ZYB1B2B3B4B5B6T2
      */
     @Override
     public String toString() {
         String configuration = new String("");
 
         configuration=configuration+setPlayerOne.toString();
+        configuration=configuration+"Z";
         configuration=configuration+setPlayerTwo.toString();
 
         return configuration;
