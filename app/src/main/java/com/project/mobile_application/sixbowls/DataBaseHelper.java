@@ -118,6 +118,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Record getRecord(String name){
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
+        Record record = null;
 
         // 2. build query
         Cursor cursor =
@@ -131,25 +132,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         null); // h. limit
 
         // 3. if we got results get the first one
-        if (cursor != null)
+        if (cursor != null) {
             cursor.moveToFirst();
 
-        // 4. build record object
-        Record record = new Record();
-        record.setPlayerName(cursor.getString(0));
-        record.setNumberOfVictories(cursor.getInt(1));
-        record.setNumberOfLost(cursor.getInt(2));
-        record.setNumberOfTie(cursor.getInt(3));
-        record.setNumberOfMatches(cursor.getInt(4));
-        record.setNumberOfSeeds(cursor.getInt(5));
+            // 4. build record object
+            record = new Record();
+            record.setPlayerName(cursor.getString(0));
+            record.setNumberOfVictories(cursor.getInt(1));
+            record.setNumberOfLost(cursor.getInt(2));
+            record.setNumberOfTie(cursor.getInt(3));
+            record.setNumberOfMatches(cursor.getInt(4));
+            record.setNumberOfSeeds(cursor.getInt(5));
 
+        }
         // 5. return record
         return record;
     }
 
 
     /**
-     * this method update the database of records
+     * this method update the database of records, if the record passed contains a name not yet used this method create the new row
+     * calling addRecord
      * @param newRecord : a new object record, it is mandatory to have playerName and
      *                  numberOfSeeds filled with a right value. The other fields can be null.
      * @param result : WIN, LOST, TIE, one of these three condition
@@ -157,66 +160,64 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      */
     public int updateRecord(Record newRecord, MatchResult result) {
 
+        int success = 0;
         Record lastRecord = getRecord(newRecord.getPlayerName());
 
-        // 1. get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // 2. create ContentValues to add key "column"/value
-        ContentValues values = new ContentValues();
-        switch (result){
-            case WIN:
-                values.put(KEY_ID, lastRecord.getPlayerName());
-                values.put(KEY_WIN, lastRecord.getNumberOfVictories() + 1);
-                values.put(KEY_LOST, lastRecord.getNumberOfLost());
-                values.put(KEY_TIE, lastRecord.getNumberOfTie());
-                values.put(KEY_TOTAL, lastRecord.getNumberOfMatches() + 1);
-                if( newRecord.getNumberOfSeeds() > lastRecord.getNumberOfSeeds()){
-                    values.put(KEY_MAX_SEEDS, newRecord.getNumberOfSeeds());
-                }
-                else{
-                    values.put(KEY_MAX_SEEDS, lastRecord.getNumberOfSeeds());
-                }
-                break;
-            case LOST:
-                values.put(KEY_ID, lastRecord.getPlayerName());
-                values.put(KEY_WIN, lastRecord.getNumberOfVictories());
-                values.put(KEY_LOST, lastRecord.getNumberOfLost() + 1);
-                values.put(KEY_TIE, lastRecord.getNumberOfTie());
-                values.put(KEY_TOTAL, lastRecord.getNumberOfMatches() + 1);
-                if( newRecord.getNumberOfSeeds() > lastRecord.getNumberOfSeeds()){
-                    values.put(KEY_MAX_SEEDS, newRecord.getNumberOfSeeds());
-                }
-                else{
-                    values.put(KEY_MAX_SEEDS, lastRecord.getNumberOfSeeds());
-                }
-                break;
-            case TIE:
-                values.put(KEY_ID, lastRecord.getPlayerName());
-                values.put(KEY_WIN, lastRecord.getNumberOfVictories());
-                values.put(KEY_LOST, lastRecord.getNumberOfLost());
-                values.put(KEY_TIE, lastRecord.getNumberOfTie() + 1);
-                values.put(KEY_TOTAL, lastRecord.getNumberOfMatches() + 1);
-                if( newRecord.getNumberOfSeeds() > lastRecord.getNumberOfSeeds()){
-                    values.put(KEY_MAX_SEEDS, newRecord.getNumberOfSeeds());
-                }
-                else{
-                    values.put(KEY_MAX_SEEDS, lastRecord.getNumberOfSeeds());
-                }
-                break;
+        if( getRecord(newRecord.getPlayerName()) == null ){
+            addRecord(newRecord,result);
         }
-
-        // 3. updating row
-        int i = db.update(TABLE_RECORDS, //table
-                values, // column/value
-                KEY_ID+" = ?", // selections
-                new String[] { String.valueOf(newRecord.getPlayerName()) }); //selection args
-
-        // 4. close
-        db.close();
-
-        return i;
-
+        else {
+            // 1. get reference to writable DB
+            SQLiteDatabase db = this.getWritableDatabase();
+            // 2. create ContentValues to add key "column"/value
+            ContentValues values = new ContentValues();
+            switch (result) {
+                case WIN:
+                    values.put(KEY_ID, lastRecord.getPlayerName());
+                    values.put(KEY_WIN, lastRecord.getNumberOfVictories() + 1);
+                    values.put(KEY_LOST, lastRecord.getNumberOfLost());
+                    values.put(KEY_TIE, lastRecord.getNumberOfTie());
+                    values.put(KEY_TOTAL, lastRecord.getNumberOfMatches() + 1);
+                    if (newRecord.getNumberOfSeeds() > lastRecord.getNumberOfSeeds()) {
+                        values.put(KEY_MAX_SEEDS, newRecord.getNumberOfSeeds());
+                    } else {
+                        values.put(KEY_MAX_SEEDS, lastRecord.getNumberOfSeeds());
+                    }
+                    break;
+                case LOST:
+                    values.put(KEY_ID, lastRecord.getPlayerName());
+                    values.put(KEY_WIN, lastRecord.getNumberOfVictories());
+                    values.put(KEY_LOST, lastRecord.getNumberOfLost() + 1);
+                    values.put(KEY_TIE, lastRecord.getNumberOfTie());
+                    values.put(KEY_TOTAL, lastRecord.getNumberOfMatches() + 1);
+                    if (newRecord.getNumberOfSeeds() > lastRecord.getNumberOfSeeds()) {
+                        values.put(KEY_MAX_SEEDS, newRecord.getNumberOfSeeds());
+                    } else {
+                        values.put(KEY_MAX_SEEDS, lastRecord.getNumberOfSeeds());
+                    }
+                    break;
+                case TIE:
+                    values.put(KEY_ID, lastRecord.getPlayerName());
+                    values.put(KEY_WIN, lastRecord.getNumberOfVictories());
+                    values.put(KEY_LOST, lastRecord.getNumberOfLost());
+                    values.put(KEY_TIE, lastRecord.getNumberOfTie() + 1);
+                    values.put(KEY_TOTAL, lastRecord.getNumberOfMatches() + 1);
+                    if (newRecord.getNumberOfSeeds() > lastRecord.getNumberOfSeeds()) {
+                        values.put(KEY_MAX_SEEDS, newRecord.getNumberOfSeeds());
+                    } else {
+                        values.put(KEY_MAX_SEEDS, lastRecord.getNumberOfSeeds());
+                    }
+                    break;
+            }
+            // 3. updating row
+            success = db.update(TABLE_RECORDS, //table
+                    values, // column/value
+                    KEY_ID + " = ?", // selections
+                    new String[]{String.valueOf(newRecord.getPlayerName())}); //selection args
+            // 4. close
+            db.close();
+        }
+        return success;
     }
 
     /**
