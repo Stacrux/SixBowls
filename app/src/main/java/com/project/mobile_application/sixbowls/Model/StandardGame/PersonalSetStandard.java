@@ -119,7 +119,7 @@ public class PersonalSetStandard implements PersonalSet {
      */
     @Override
     public int getSeedsTray() {
-        return 0;
+        return this.tray.getSeeds();
     }
 
     /**

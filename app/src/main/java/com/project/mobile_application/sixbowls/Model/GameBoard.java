@@ -57,7 +57,7 @@ public class GameBoard {
           // in that case the seeds from the opponent are stolen
           if( setPlayerOne.isLastBowlEmpty()){
              //steal all seeds from opponent symmetric bowl plus one seed of active player
-              seedMoving = setPlayerTwo.pickupSeeds(setPlayerOne.getLastBowlIdentifier()) +
+              seedMoving = setPlayerTwo.pickupSeeds(5-setPlayerOne.getLastBowlIdentifier()) +
               setPlayerOne.pickupSeeds(setPlayerOne.getLastBowlIdentifier());
              //then let's give the seeds to player one
               setPlayerOne.moveDirectlyToTray(seedMoving);
@@ -80,7 +80,7 @@ public class GameBoard {
             // in that case the seeds from the opponent are stolen
             if( setPlayerTwo.isLastBowlEmpty()){
                 //steal all seeds from opponent symmetric bowl plus one seed of active player
-                seedMoving = setPlayerOne.pickupSeeds(setPlayerTwo.getLastBowlIdentifier()) +
+                seedMoving = setPlayerOne.pickupSeeds(5-setPlayerTwo.getLastBowlIdentifier()) +
                         setPlayerTwo.pickupSeeds(setPlayerTwo.getLastBowlIdentifier());
                 //then let's give the seeds to player one
                 setPlayerTwo.moveDirectlyToTray(seedMoving);

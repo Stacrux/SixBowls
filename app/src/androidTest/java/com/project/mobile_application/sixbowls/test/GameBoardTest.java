@@ -45,6 +45,7 @@ public class GameBoardTest extends TestCase {
      *
      * @ the configuration is a string of type YBXBXBXBXBXBXTX Z YBXBXBXBXBXBXTX
      */
+
      public void testSeedingPhase(){
 
         gameboard = gameFactory.generateBoard("1B3B3B3B10B3B3T10Z0B3B3B3B3B3B3T0");
@@ -136,15 +137,16 @@ public class GameBoardTest extends TestCase {
         //  12            18
         //    0 0 1 0 0 0
 
-        gameboard = gameFactory.generateBoard("0B0B0B0B0B0B1T18Z1B0B2B0B3B0B0T12");
-        gameboard.seedingPhase(4);
+        gameboard = gameFactory.generateBoard("0B0B0B1B0B0B0T18Z1B0B2B3B0B0B0T12");
+        int x=0;
+        gameboard.seedingPhase(1);
         int winner= gameboard.checkGameOver();
 
         assertEquals(2,winner);
     }
 
-
-
+     //  P2  5 4 3 2 1 0
+     //  P2  0 1 2 3 4 5
 
 
     @Override
