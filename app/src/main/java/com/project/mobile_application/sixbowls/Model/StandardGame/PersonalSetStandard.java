@@ -147,7 +147,7 @@ public class PersonalSetStandard implements PersonalSet {
         if( active && seedsMovingTemp != 0){
             //drop one seed inside each NEXT bowl
             for(int e  = 0 ; e < Constants.numberOfBowls; e++){
-                if( bowls.get(e).getBowlIdentifier() > bowlIdentifier && seedsMoving > 0){
+                if( bowls.get(e).getBowlIdentifier() > bowlIdentifier && seedsMovingTemp > 0){
                     bowls.get(e).increment_seed_count(1);
                     seedsMovingTemp -= 1;
                     //if there are no more seeds to be dropped the last bowl filled id is saved
@@ -170,9 +170,9 @@ public class PersonalSetStandard implements PersonalSet {
         //otherwise this is the set of the inactive player
         else if(!active && seedsMovingTemp != 0){
             //let's drop the seeds in the bowls
-            for(Bowl bowl : this.bowls){
-                if( bowl.getBowlIdentifier() >= bowlIdentifier && seedsMovingTemp > 0){
-                    bowl.increment_seed_count(1);
+            for(int e  = 0 ; e < Constants.numberOfBowls; e++){
+                if( bowls.get(e).getBowlIdentifier() >= bowlIdentifier && seedsMovingTemp > 0){
+                    bowls.get(e).increment_seed_count(1);
                     seedsMovingTemp -= 1;
                 }
             }
