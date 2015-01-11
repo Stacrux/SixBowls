@@ -114,7 +114,33 @@ public class GameBoardTest extends TestCase {
         gameboard.seedingPhase(5);
         int winner= gameboard.checkGameOver();
 
-        assertEquals(winner,1);
+        assertEquals(1,winner);
+    }
+
+    public void testCheckGameOver2() throws Exception {
+
+        //    0 2 0 3 0 0
+        //  12            18
+        //    0 0 0 0 0 1
+
+        gameboard = gameFactory.generateBoard("1B0B0B0B0B0B1T18Z0B0B2B0B3B0B0T12");
+        gameboard.seedingPhase(5);
+        int winner= gameboard.checkGameOver();
+
+        assertEquals(0,winner);
+    }
+
+    public void testCheckGameOver3() throws Exception {
+
+        //    0 0 0 3 2 0
+        //  12            18
+        //    0 0 1 0 0 0
+
+        gameboard = gameFactory.generateBoard("0B0B0B0B0B0B1T18Z1B0B2B0B3B0B0T12");
+        gameboard.seedingPhase(4);
+        int winner= gameboard.checkGameOver();
+
+        assertEquals(2,winner);
     }
 
 
