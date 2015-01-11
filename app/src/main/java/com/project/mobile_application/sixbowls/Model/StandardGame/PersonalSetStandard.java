@@ -171,7 +171,7 @@ public class PersonalSetStandard implements PersonalSet {
         else if(!active && seedsMovingTemp != 0){
             //let's drop the seeds in the bowls
             for(Bowl bowl : this.bowls){
-                if( bowl.getBowlIdentifier() >= bowlIdentifier && seedsMoving > 0){
+                if( bowl.getBowlIdentifier() >= bowlIdentifier && seedsMovingTemp > 0){
                     bowl.increment_seed_count(1);
                     seedsMovingTemp -= 1;
                 }
