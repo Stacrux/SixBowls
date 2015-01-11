@@ -65,7 +65,7 @@ public class GameFactoryFromString {
         playerTwo=new Player(1);
         bowlsTwo=new ArrayList<Bowl>();
         setBowls(bowlsTwo,secondMiddle);
-        trayTwo=new TrayStandard(0);
+        trayTwo=new TrayStandard(Integer.parseInt(""+secondMiddle.substring(secondMiddle.indexOf("T")+1,secondMiddle.length())));
         setPlayerTwo=new PersonalSetStandard(playerTwo,bowlsTwo,trayTwo,active);
 
         gameboard=new GameBoard(setPlayerOne,setPlayerTwo);
