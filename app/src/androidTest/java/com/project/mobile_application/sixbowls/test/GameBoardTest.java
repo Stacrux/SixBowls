@@ -80,9 +80,28 @@ public class GameBoardTest extends TestCase {
             e.printStackTrace();
             fail();
         }
-
         assertEquals(confExpectation, actualOutput);
     }
+
+    public void testSeedingPhase2(){  // non funziona qualcosa
+
+        gameboard = gameFactory.generateBoard("1B3B3B3B3B4B3T0Z0B3B3B3B3B3B3T0");
+        gameboard.seedingPhase(4);
+
+        // 3 3 3 3 4 3    0   /    3 3 3 3 3 3   0  ( configuration ) active player 1
+        // 3 3 3 3 0 4    1   /    4 4 3 3 3 3   0  ( expettation   ) active player 2
+        // bowlId  3
+        String confExpectation="0B3B3B3B3B0B4T1Z1B4B4B3B3B3B3T0";
+        String actualOutput="";
+        try {
+            actualOutput = gameboard.toString();
+        }catch(Exception e){
+            e.printStackTrace();
+            fail();
+        }
+        assertEquals(confExpectation, actualOutput);
+    }
+
 
     /*
     public void testCheckGameOver() throws Exception {
