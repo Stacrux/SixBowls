@@ -103,10 +103,21 @@ public class GameBoardTest extends TestCase {
     }
 
 
-    /*
+
     public void testCheckGameOver() throws Exception {
 
-    }*/
+        //    0 2 0 3 0 0
+        //  19            11
+        //    0 0 0 0 0 1
+
+        gameboard = gameFactory.generateBoard("1B0B0B0B0B0B1T11Z0B0B2B0B3B0B0T19");
+        gameboard.seedingPhase(5);
+        int winner= gameboard.checkGameOver();
+
+        assertEquals(winner,1);
+    }
+
+    }
 
 
 
