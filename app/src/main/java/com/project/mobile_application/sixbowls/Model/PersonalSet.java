@@ -72,7 +72,7 @@ public interface PersonalSet {
 
 
     /**
-     * setter for parameter active, it depends on the other set state so must be setted outside this set
+     * setter for parameter active, it depends on the other set state so must be used outside this set
      * @param nextState : next state this set will be
      */
     public void setActive(boolean nextState);
