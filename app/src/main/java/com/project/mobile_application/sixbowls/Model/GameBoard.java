@@ -45,7 +45,7 @@ public class GameBoard {
            //start the seeding loop
           while(seedMoving > 0){
                 seedMoving = setPlayerTwo.innerSeeding(0,seedMoving);
-                seedMoving = setPlayerOne.innerSeeding(0,seedMoving);
+                seedMoving = setPlayerOne.innerSeeding(-1,seedMoving);
           }
           //assign the next active state
           if( !setPlayerOne.isLastSeedInTraY()){
@@ -69,7 +69,7 @@ public class GameBoard {
             //start the seeding phase
             while(seedMoving > 0){
                 seedMoving = setPlayerOne.innerSeeding(0,seedMoving);
-                seedMoving = setPlayerTwo.innerSeeding(0,seedMoving);
+                seedMoving = setPlayerTwo.innerSeeding(-1,seedMoving);
             }
             //assign the next active state
             if( !setPlayerTwo.isLastSeedInTraY()){
@@ -87,9 +87,9 @@ public class GameBoard {
             }
         }
 
-        if( setPlayerOne.isActive() ){
+       /* if( setPlayerOne.isActive() ){
 
-        }
+        }*/
 
     }
 
