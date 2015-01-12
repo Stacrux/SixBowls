@@ -23,10 +23,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/button_p1_vs_p2"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/button_stats"
-        android:layout_toStartOf="@+id/button_stats"
-        android:layout_marginRight="100dp"
-        android:layout_marginEnd="100dp" />
+        android:layout_alignLeft="@+id/button_p1_vs_ai"
+        android:layout_alignStart="@+id/button_p1_vs_ai" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,19 +32,19 @@
         android:text="@string/p1vsai"
         android:id="@+id/button_p1_vs_ai"
         android:layout_below="@+id/button_p1_vs_p2"
-        android:layout_alignLeft="@+id/button_p1_vs_p2"
-        android:layout_alignStart="@+id/button_p1_vs_p2"
-        android:layout_alignRight="@+id/button_p1_vs_p2"
-        android:layout_alignEnd="@+id/button_p1_vs_p2" />
+        android:layout_toLeftOf="@+id/button_rules"
+        android:layout_toStartOf="@+id/button_rules"
+        android:layout_marginRight="23dp"
+        android:layout_marginEnd="23dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/statistics"
         android:id="@+id/button_stats"
-        android:layout_marginRight="124dp"
-        android:layout_marginEnd="124dp"
-        android:layout_alignTop="@+id/button_p1_vs_p2"
+        android:layout_marginRight="164dp"
+        android:layout_marginEnd="164dp"
+        android:layout_below="@+id/button_p1_vs_p2"
         android:layout_alignRight="@+id/main_title"
         android:layout_alignEnd="@+id/main_title" />
 
@@ -55,9 +53,9 @@
         android:layout_height="wrap_content"
         android:text="@string/game_rules"
         android:id="@+id/button_rules"
-        android:layout_below="@+id/button_stats"
+        android:layout_above="@+id/button_stats"
         android:layout_alignLeft="@+id/button_stats"
-        android:layout_alignBottom="@+id/button_p1_vs_ai" />
+        android:layout_alignStart="@+id/button_stats" />
 
 
 
