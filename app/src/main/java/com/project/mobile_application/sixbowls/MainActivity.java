@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.view.WindowManager;
 import android.widget.Button;
 
 
@@ -17,6 +18,14 @@ public class MainActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        //imposta l'orientamento dello schermo
+        //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //nascondi statusbar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
         b1=(Button)findViewById(R.id.button);

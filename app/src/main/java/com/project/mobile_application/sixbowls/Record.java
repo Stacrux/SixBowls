@@ -14,52 +14,33 @@ public class Record {
     private int numberOfMatches;
     private int numberOfSeeds;
 
+    public Record(String playerName, int numberOfVictories, int numberOfLost, int numberOfTie, int numberOfMatches, int numberOfSeeds){
+        this.playerName = playerName;
+        this.numberOfVictories = numberOfVictories;
+        this.numberOfLost = numberOfLost;
+        this.numberOfTie = numberOfTie;
+        this.numberOfMatches  = numberOfMatches;
+        this.numberOfSeeds = numberOfSeeds;
+    }
 
     public int getNumberOfVictories() {
         return numberOfVictories;
     }
-
-    public void setNumberOfVictories(int numberOfVictories) {
-        this.numberOfVictories = numberOfVictories;
-    }
-
     public int getNumberOfLost() {
         return numberOfLost;
     }
-
-    public void setNumberOfLost(int numberOfLost) {
-        this.numberOfLost = numberOfLost;
-    }
-
     public int getNumberOfTie() {
         return numberOfTie;
     }
-
-    public void setNumberOfTie(int numberOfTie) {
-        this.numberOfTie = numberOfTie;
-    }
-
     public int getNumberOfMatches() {
         return numberOfMatches;
     }
-
-    public void setNumberOfMatches(int numberOfMatches) {
-        this.numberOfMatches = numberOfMatches;
-    }
-
     public int getNumberOfSeeds() {
         return numberOfSeeds;
-    }
-
-    public void setNumberOfSeeds(int numberOfSeeds) {
-        this.numberOfSeeds = numberOfSeeds;
     }
 
     public String getPlayerName() {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
 }

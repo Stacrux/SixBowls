@@ -26,7 +26,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     // records table name
-    private static final String TABLE_RECORDS = "records";
+    private static final String TABLE_RECORDS = "recordsTable";
 
     // records Table Columns names
     private static final String KEY_ID = "name";
@@ -34,29 +34,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String KEY_LOST = "lost";
     private static final String KEY_TIE =  "tie";
     private static final String KEY_TOTAL =  "total";
-    private static final String KEY_MAX_SEEDS =  "max seeds";
+    private static final String KEY_MAX_SEEDS =  "seeds";
 
     private static final String[] COLUMNS = {KEY_ID,KEY_WIN,KEY_LOST,KEY_TIE,KEY_TOTAL,KEY_MAX_SEEDS};
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //db.execSQL("DROP TABLE IF EXISTS recordsTable");
         // SQL statement to create the records table
-        String CREATE_BOOK_TABLE = "CREATE TABLE records ( " +
+        String CREATE_RECORDS_TABLE = "CREATE TABLE recordsTable ( " +
                 "name TEXT PRIMARY KEY, " +
                 "victories INTEGER, "+
                 "lost INTEGER, " +
                 "tie INTEGER, " +
                 "total INTEGER, "+
-                "max seeds INTEGER )";
+                "seeds INTEGER )";
 
-        // create books table
-        db.execSQL(CREATE_BOOK_TABLE);
+        // create RECORDS table
+        db.execSQL(CREATE_RECORDS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older books table if existed
-        db.execSQL("DROP TABLE IF EXISTS records");
+        db.execSQL("DROP TABLE IF EXISTS recordsTable");
         // create fresh books table
         this.onCreate(db);
     }
@@ -113,7 +114,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /**
      * this method give access to the database returning a Record object
      * @param name : the name of the requested player used as key
-     * @return : Record object (name of the player, number of victories, number of lost, number of tie, number of matches played, maximum number of seeds collected)
+     * @return : Record object (name of the player, number of victories, number of lost matches, number of tie, number of matches played, maximum number of seeds collected)
      */
     public Record getRecord(String name){
         // 1. get reference to readable DB
@@ -124,7 +125,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor =
                 db.query(TABLE_RECORDS, // a. table
                         COLUMNS, // b. column names
-                        " id = ?", // c. selections
+                        " name = ?", // c. selections
                         new String[] { String.valueOf(name) }, // d. selections args
                         null, // e. group by
                         null, // f. having
@@ -132,19 +133,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         null); // h. limit
 
         // 3. if we got results get the first one
-        if (cursor != null) {
+        if (cursor != null)
             cursor.moveToFirst();
 
-            // 4. build record object
-            record = new Record();
-            record.setPlayerName(cursor.getString(0));
-            record.setNumberOfVictories(cursor.getInt(1));
-            record.setNumberOfLost(cursor.getInt(2));
-            record.setNumberOfTie(cursor.getInt(3));
-            record.setNumberOfMatches(cursor.getInt(4));
-            record.setNumberOfSeeds(cursor.getInt(5));
+        // 4. build record object
+        record = new Record(cursor.getString(0),cursor.getInt(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5));
 
-        }
         // 5. return record
         return record;
     }
@@ -258,13 +252,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Record record = null;
         if (cursor.moveToFirst()) {
             do {
-                record = new Record();
-                record.setPlayerName(cursor.getString(0));
-                record.setNumberOfVictories(cursor.getInt(1));
-                record.setNumberOfLost(cursor.getInt(2));
-                record.setNumberOfTie(cursor.getInt(3));
-                record.setNumberOfMatches(cursor.getInt(4));
-                record.setNumberOfSeeds(cursor.getInt(5));
+                record = new Record(cursor.getString(0),cursor.getInt(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5));
 
                 // Add book to books
                 recordList.add(record);
