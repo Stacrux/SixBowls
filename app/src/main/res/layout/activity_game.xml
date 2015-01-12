@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button5"
-            android:background="@drawable/p2_bowl"
+            android:background="@drawable/bowl_p2_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button6"
-            android:background="@drawable/p2_bowl"
+            android:background="@drawable/bowl_p2_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button7"
-            android:background="@drawable/p2_bowl"
+            android:background="@drawable/bowl_p2_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button8"
-            android:background="@drawable/p2_bowl"
+            android:background="@drawable/bowl_p2_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button11"
-            android:background="@drawable/p2_bowl"
+            android:background="@drawable/bowl_p2_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -164,7 +164,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button12"
-            android:background="@drawable/p2_bowl"
+            android:background="@drawable/bowl_p2_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -193,7 +193,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button13"
-            android:background="@drawable/p1_bowl"
+            android:background="@drawable/bowl_p1_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -208,7 +208,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button14"
-            android:background="@drawable/p1_bowl"
+            android:background="@drawable/bowl_p1_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button15"
-            android:background="@drawable/p1_bowl"
+            android:background="@drawable/bowl_p1_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -238,7 +238,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button16"
-            android:background="@drawable/p1_bowl"
+            android:background="@drawable/bowl_p1_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -253,7 +253,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button17"
-            android:background="@drawable/p1_bowl"
+            android:background="@drawable/bowl_p1_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
@@ -268,7 +268,7 @@
             android:layout_height="wrap_content"
             android:text="3"
             android:id="@+id/button18"
-            android:background="@drawable/p1_bowl"
+            android:background="@drawable/bowl_p1_bg_selector"
             android:layout_above="@+id/button9"
             android:layout_toRightOf="@+id/button" />
 
