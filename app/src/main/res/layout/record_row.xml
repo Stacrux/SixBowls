@@ -8,6 +8,7 @@
         android:id="@+id/textViewList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/background_material_light"
         android:text="" android:padding="10dip"
         android:textSize="22dip"/>
 

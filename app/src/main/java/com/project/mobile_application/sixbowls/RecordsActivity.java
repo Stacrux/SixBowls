@@ -66,6 +66,7 @@ public class RecordsActivity extends Activity {
 
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(this, R.layout.record_row, R.id.textViewList, recordsStrings);
+
         recordsListView.setAdapter(arrayAdapter);
 
     }
