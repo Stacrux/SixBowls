@@ -1,6 +1,7 @@
 package com.project.mobile_application.sixbowls;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,7 +21,7 @@ public class GameActivity extends Activity{
         setContentView(R.layout.activity_game);
 
         //imposta l'orientamento dello schermo
-        //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //nascondi statusbar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

@@ -39,7 +39,7 @@ public class RecordsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
         //imposta l'orientamento dello schermo
-        //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //nascondi statusbar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
