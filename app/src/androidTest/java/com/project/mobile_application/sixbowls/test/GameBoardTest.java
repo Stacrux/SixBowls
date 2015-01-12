@@ -1,21 +1,9 @@
 package com.project.mobile_application.sixbowls.test;
 
-import android.util.Log;
-
-import com.project.mobile_application.sixbowls.Model.Bowl;
-import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
-import com.project.mobile_application.sixbowls.Model.PersonalSet;
-import com.project.mobile_application.sixbowls.Model.Player;
-import com.project.mobile_application.sixbowls.Model.StandardGame.BowlStandard;
-import com.project.mobile_application.sixbowls.Model.StandardGame.PersonalSetStandard;
-import com.project.mobile_application.sixbowls.Model.StandardGame.TrayStandard;
-import com.project.mobile_application.sixbowls.Model.Tray;
+
 
 import junit.framework.TestCase;
-
-import java.util.ArrayList;
-
 
 /**
  * Created by MattiaBenzoni on 08/01/2015.
@@ -183,7 +171,6 @@ public class GameBoardTest extends TestCase {
         //    0 0 1 0 0 0
 
         gameboard = gameFactory.generateBoard("0B0B0B1B0B0B0T18Z1B0B2B3B0B0B0T12");
-        int x=0;
         gameboard.seedingPhase(1);
         int winner= gameboard.checkGameOver();
 

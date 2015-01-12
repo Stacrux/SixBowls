@@ -87,7 +87,7 @@ public class GameBoard {
             }
         }
 
-       /* if( setPlayerOne.isActive() ){
+      /*  if( setPlayerOne.isActive() ){
 
         }*/
 
