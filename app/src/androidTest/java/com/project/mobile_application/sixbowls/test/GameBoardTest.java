@@ -71,7 +71,7 @@ public class GameBoardTest extends TestCase {
         gameboard.seedingPhase(3);
 
         // 3 3 3 3 3 3    0   /    3 3 3 3 3 3   0  ( configuration ) active player 1
-        // 3 3 3 3 3 3    0   /    3 3 3 0 4 4   1  ( expettation   ) active player 1
+        // 3 3 3 3 3 3    0   /    3 3 3 0 4 4   1  ( expectation   ) active player 1
         // bowlId  3
         String confExpectation="0B3B3B3B3B3B3T0Z1B3B3B3B0B4B4T1";
         String actualOutput="";
