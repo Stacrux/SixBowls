@@ -22,7 +22,7 @@ public class GameBoardFactory {
         int i =1;
         GameBoard gameboard = null;
 
-        if( configuration.equals("STANDARD")){
+        if( configuration.equals("p1vsp2")){
             //Player(identifier expressed as integer)
             Player playerOne = new Player(0);
             Player playerTwo = new Player(1);
