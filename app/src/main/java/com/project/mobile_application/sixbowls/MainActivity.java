@@ -1,5 +1,6 @@
 package com.project.mobile_application.sixbowls;
 
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,8 +13,9 @@ import android.widget.Button;
 
 public class MainActivity extends ActionBarActivity{
 
-    Button b1;
-    Button b2;
+    Button buttonP1VsP2;
+    Button buttonP1VsAi;
+    Button buttonStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,8 @@ public class MainActivity extends ActionBarActivity{
 
         setContentView(R.layout.activity_main);
 
-        b1=(Button)findViewById(R.id.button);
-        b1.setOnClickListener(new View.OnClickListener()
+        buttonP1VsP2=(Button)findViewById(R.id.button_p1_vs_p2);
+        buttonP1VsP2.setOnClickListener(new View.OnClickListener()
                               {
                                   public void onClick(View v)
                                   {
@@ -40,8 +42,8 @@ public class MainActivity extends ActionBarActivity{
                               }
         );
 
-        b2=(Button)findViewById(R.id.button2);
-        b2.setOnClickListener(new View.OnClickListener()
+        buttonP1VsAi=(Button)findViewById(R.id.button_p1_vs_ai);
+        buttonP1VsAi.setOnClickListener(new View.OnClickListener()
                               {
                                   public void onClick(View v)
                                   {
@@ -50,6 +52,17 @@ public class MainActivity extends ActionBarActivity{
                                       startActivity(i);
                                   }
                               }
+        );
+
+        buttonStats = (Button)findViewById(R.id.button_stats);
+        buttonStats.setOnClickListener(new View.OnClickListener()
+                                           {
+                                               public void onClick(View v)
+                                               {
+                                                   Intent i = new Intent(MainActivity.this,RecordsActivity.class);
+                                                   startActivity(i);
+                                               }
+                                           }
         );
     }
 

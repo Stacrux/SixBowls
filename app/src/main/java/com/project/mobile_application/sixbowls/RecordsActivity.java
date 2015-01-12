@@ -5,11 +5,13 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.project.mobile_application.sixbowls.Model.MatchResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,16 +20,20 @@ import java.util.List;
 public class RecordsActivity extends Activity {
 
     DataBaseHelper database = new DataBaseHelper(this);
-
+    //DA RIMUOVERE DOPO CHE ABBIAMO APPURATO IL FUNZIONAMENTO
     Record dummyRecord = new Record("Giacomo",3,2,1,6,20);
     Record dummyRecord2 = new Record("Ignazio",5,2,1,8,30);
+    Record dummyRecord3 = new Record("Carlo",5,2,1,8,44);
+    Record dummyRecord4 = new Record("Marco",5,2,7,14,13);
+    Record dummyRecord5 = new Record("Giorgio",5,2,3,10,22);
+    //DA RIMUOVERE DOPO CHE ABBIAMO APPURATO IL FUNZIONAMENTO
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
         //imposta l'orientamento dello schermo
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //nascondi statusbar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -36,27 +42,31 @@ public class RecordsActivity extends Activity {
         this.deleteDatabase("GameRecords");
         database.addRecord(dummyRecord, MatchResult.LOST);
         database.addRecord(dummyRecord2, MatchResult.LOST);
+        database.addRecord(dummyRecord3, MatchResult.LOST);
+        database.addRecord(dummyRecord4, MatchResult.LOST);
+        database.addRecord(dummyRecord5, MatchResult.LOST);
         //DA RIMUOVERE DOPO CHE ABBIAMO APPURATO IL FUNZIONAMENTO
 
 
-        //load the list of records in memory
-        List<Record> records = database.getAllRecords();
-
         //create a Listview
         ListView recordsListView = (ListView) findViewById(R.id.record_list);
+        ArrayList<String> recordsStrings = new ArrayList<String>();
+        //load the list of records in memory
+        List<Record> records = database.getAllRecords();
+        for (Record record : records) {
+            String recordString = record.getPlayerName().toUpperCase() +
+                    "\nMatches won : " + record.getNumberOfVictories() +
+                    " Matches lost : " + record.getNumberOfLost() +
+                    "\nMatches tied :  " + record.getNumberOfTie() +
+                    "\nTOTAL : " + record.getNumberOfMatches() +
+                    "\nbest Tray : " + record.getNumberOfSeeds();
 
-        for(Record record : records){
-            TextView recordTextView = new TextView(this);
-            recordTextView.setText(record.getPlayerName()+" "+
-                                   "WIN : " + record.getNumberOfVictories() +
-                                    "LOST : " + record.getNumberOfLost() +
-                                    "TIE :  " + record.getNumberOfTie() +
-                                    "TOTAL : " + record.getNumberOfMatches() +
-                                    "SEEDS MAX : " + record.getNumberOfSeeds());
-
-            recordsListView.addHeaderView(recordTextView);
-
+            recordsStrings.add(recordString);
         }
+
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<String>(this, R.layout.record_row, R.id.textViewList, recordsStrings);
+        recordsListView.setAdapter(arrayAdapter);
 
     }
 
