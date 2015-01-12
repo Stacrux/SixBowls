@@ -28,7 +28,5 @@ public class GameActivity extends Activity{
 
         String dato1 = getIntent().getExtras().getString("gameType");
 
-       txt=(TextView)this.findViewById(R.id.textView);
-       txt.setText(dato1);
     }
 }
