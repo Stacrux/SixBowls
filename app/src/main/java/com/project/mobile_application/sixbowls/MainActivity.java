@@ -1,5 +1,6 @@
 package com.project.mobile_application.sixbowls;
 
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 
-public class MainActivity extends ActionBarActivity{
+public class MainActivity extends Activity{//ActionBarActivity{
 
     Button buttonP1VsP2;
     Button buttonP1VsAi;

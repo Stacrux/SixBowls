@@ -55,10 +55,10 @@
         android:layout_below="@+id/button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button2"
         android:layout_alignRight="@+id/button2"
         android:layout_alignEnd="@+id/button2"
-        android:background="@drawable/p2_tray" />
+        android:background="@drawable/p2_tray"
+        android:layout_above="@+id/button2" />
 
     <Button
         android:layout_width="wrap_content"
@@ -66,13 +66,13 @@
         android:text="0"
         android:textColor="@color/abc_search_url_text"
         android:id="@+id/button10"
-        android:layout_above="@+id/button3"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/button9"
         android:layout_alignLeft="@+id/button3"
         android:layout_alignStart="@+id/button3"
-        android:background="@drawable/p1_tray" />
+        android:background="@drawable/p1_tray"
+        android:layout_above="@+id/button3" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -304,15 +304,17 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:text="Insert Player 2 name here" />
+            android:textColor="@color/abc_search_url_text"
+            android:id="@+id/editText1"
+            android:onClick="setName1"
+            android:text="Set name Player1" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/abc_search_url_text"
             android:id="@+id/editText2"
-            android:text="Insert Player 1 name here" />
+            android:onClick="setName2"
+            android:text="Set name Player2" />
 
     </LinearLayout>
 

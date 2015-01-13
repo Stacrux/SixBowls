@@ -1,11 +1,15 @@
 package com.project.mobile_application.sixbowls;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.project.mobile_application.sixbowls.Model.Bowl;
@@ -26,8 +30,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     TextView txt;
 
-    TextView namePlayer1;
-    TextView namePlayer2;
+    EditText namePlayer1;
+    EditText namePlayer2;
 
     GameBoard board;
     GameBoardFactory factory = new GameBoardFactory();
@@ -86,52 +90,43 @@ public class GameActivity extends Activity implements View.OnClickListener {
         tr1 = (Button)findViewById(R.id.button9);
         tr2 = (Button)findViewById(R.id.button10);
 
-        namePlayer1=(TextView)findViewById(R.id.editText);
-        namePlayer1.setEnabled(false);
-        namePlayer2=(TextView)findViewById(R.id.editText2);
-        namePlayer2.setEnabled(false);
-
-
-       /*
-        //bowl1.setOnClickListener(this);
-        bowl2 = (Button)findViewById(R.id.button6);
-        //bowl2.setOnClickListener(this);
-
-        bowl3 = (Button)findViewById(R.id.button7);
-        //bowl3.setOnClickListener(this);
-
-        bowl4 = (Button)findViewById(R.id.button8);
-        //bowl4.setOnClickListener(this);
-
-        bowl5 = (Button)findViewById(R.id.button11);
-        //bowl5.setOnClickListener(this);
-
-        bowl6 = (Button)findViewById(R.id.button12);
-        //bowl6.setOnClickListener(this);
-
-        bowl7 = (Button)findViewById(R.id.button13);
-        //bowl7.setOnClickListener(this);
-        bowl8 = (Button)findViewById(R.id.button14);
-        //bowl8.setOnClickListener(this);
-        bowl9 = (Button)findViewById(R.id.button15);
-        //bowl9.setOnClickListener(this);
-        bowl10 = (Button)findViewById(R.id.button16);
-        //bowl10.setOnClickListener(this);
-        bowl11 = (Button)findViewById(R.id.button17);
-        //bowl11.setOnClickListener(this);
-        bowl12 = (Button)findViewById(R.id.button18);
-        //bowl12.setOnClickListener(this);
-
-       */
+        /*namePlayer1=(EditText)findViewById(R.id.editText1);
+        namePlayer2=(EditText)findViewById(R.id.editText2);
+        namePlayer1.setI*/
 
         setOnClick();
-        setNamePlayer();
+        //disableAll();
+
+
+
+        //setNamePlayer();
         setBowlEnable(board.toString());
 
 
     }
 
-    private void setNamePlayer() {
+    private void disableAll() {
+
+        for(int i=0;i<Constants.numberOfBowls;i++){
+            bowls1.get(i).setEnabled(false);
+            bowls2.get(i).setEnabled(false);
+        }
+
+    }
+
+    public void setName1(View arg0){
+
+       if(!arg0.isInEditMode()){
+           arg0.setEnabled(false);
+       }
+
+    }
+
+    public void setName2(View arg0){
+
+    }
+
+   /* private void setNamePlayer() {
 
         namePlayer1.setEnabled(true);
         namePlayer1.setFocusable(true);
@@ -143,7 +138,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         while(namePlayer2.isInEditMode()){ }
         namePlayer2.setEnabled(false);
 
-    }
+    }*/
 
 
     @Override
@@ -170,9 +165,29 @@ public class GameActivity extends Activity implements View.OnClickListener {
         setView(board.toString());
         setBowlEnable(board.toString());
 
-        if((isFinish==1)||isFinish==0||isFinish==2){ /* cosa succede quando finisce la partita */ }
+        if((isFinish==1)||isFinish==0||isFinish==2){ OnBack(isFinish);}
 
     }
+
+    private void OnBack(int finish) {
+
+        AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+           if(!(finish==2))alertDlg.setMessage("Player"+(finish+1)+" is the winner!");
+           else
+              alertDlg.setMessage(" The game ended in a draw ");
+        alertDlg.setCancelable(false);
+        alertDlg.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent i=new Intent(GameActivity.this,MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        alertDlg.create().show();
+    }
+
 
     private void setBowlEnable(String conf){
 
