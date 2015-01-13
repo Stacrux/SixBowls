@@ -78,30 +78,30 @@ public class GameFactoryFromString {
     private void setBowls(ArrayList<Bowl> bowls,String sub) {
 
         int[]bowlTemp= new int[6];
-        int x=-1;
+    int x=-1;
 
-        sub=sub.substring(2,sub.length());
-        for(int i=0;i<5;i++){
-          x=sub.indexOf("B")-1;
-          if(x==0)
-              bowlTemp[i]=  Integer.parseInt(""+sub.charAt(x));
-          else
-            bowlTemp[i]=Integer.parseInt(sub.substring(0,x+1));
-          sub=sub.substring(sub.indexOf("B")+1,sub.length());
-        }
-
-        x=sub.indexOf("T")-1;
+    sub=sub.substring(2,sub.length());
+    for(int i=0;i<5;i++){
+        x=sub.indexOf("B")-1;
         if(x==0)
-            bowlTemp[5]= Integer.parseInt(""+sub.charAt(x));
+            bowlTemp[i]=  Integer.parseInt(""+sub.charAt(x));
         else
-            bowlTemp[5]=Integer.parseInt(sub.substring(0,x+1));
-
-
-        for (int e = 0; e < Constants.numberOfBowls; e++) {
-            BowlStandard bowl = new BowlStandard(bowlTemp[e], e);
-            bowls.add(bowl);
-        }
+            bowlTemp[i]=Integer.parseInt(sub.substring(0,x+1));
+        sub=sub.substring(sub.indexOf("B")+1,sub.length());
     }
+
+    x=sub.indexOf("T")-1;
+    if(x==0)
+    bowlTemp[5]= Integer.parseInt(""+sub.charAt(x));
+    else
+    bowlTemp[5]=Integer.parseInt(sub.substring(0,x+1));
+
+
+    for (int e = 0; e < Constants.numberOfBowls; e++) {
+        BowlStandard bowl = new BowlStandard(bowlTemp[e], e);
+        bowls.add(bowl);
+    }
+}
 
 
 }

@@ -146,7 +146,4 @@ public class GameBoard {
         return configuration;
     }
 
-    public int isActive(){
-        return 1;
-    }
 }
