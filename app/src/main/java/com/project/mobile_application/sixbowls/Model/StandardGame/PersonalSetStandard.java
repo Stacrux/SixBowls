@@ -142,10 +142,6 @@ public class PersonalSetStandard implements PersonalSet {
     @Override
     public int innerSeeding(int bowlIdentifier, int seedsMoving) {
 
-        if(seedsMoving == 0){
-            turnSwitcher = true;
-        }
-
         //save the number of moving seeds that will be returned, for being moved in the next set
         int seedsMovingTemp = seedsMoving;
         //if : is this the set of the active player (the one who chose the move) ?

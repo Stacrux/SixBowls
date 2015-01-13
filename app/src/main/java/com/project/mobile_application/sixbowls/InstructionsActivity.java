@@ -9,6 +9,4 @@ import android.os.Bundle;
 public class InstructionsActivity extends Activity {
 
 
-
-
 }
