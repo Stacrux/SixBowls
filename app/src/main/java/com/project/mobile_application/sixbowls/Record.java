@@ -38,7 +38,6 @@ public class Record {
     public int getNumberOfSeeds() {
         return numberOfSeeds;
     }
-
     public String getPlayerName() {
         return playerName;
     }

@@ -40,7 +40,7 @@ public class GameBoard {
         }
 
         //beginning the seeding phase with player one
-        if( setPlayerOne.isActive() ){
+        if( setPlayerOne.isActive() && seedMoving > 0 ){
            seedMoving = setPlayerOne.innerSeeding(bowlIdentifier, seedMoving);
            //start the seeding loop
           while(seedMoving > 0){
@@ -64,7 +64,7 @@ public class GameBoard {
           }
         }
         //beginning with player two
-        else{
+        else if( setPlayerTwo.isActive() && seedMoving > 0 ){
             seedMoving = setPlayerTwo.innerSeeding(bowlIdentifier, seedMoving);
             //start the seeding phase
             while(seedMoving > 0){
