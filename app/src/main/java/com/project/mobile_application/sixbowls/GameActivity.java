@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -90,22 +91,16 @@ public class GameActivity extends Activity implements View.OnClickListener {
         tr1 = (Button)findViewById(R.id.button9);
         tr2 = (Button)findViewById(R.id.button10);
 
-        /*namePlayer1=(EditText)findViewById(R.id.editText1);
-        namePlayer2=(EditText)findViewById(R.id.editText2);
-        namePlayer1.setI*/
-
         setOnClick();
+        //setNamePlayer();
         //disableAll();
 
-
-
-        //setNamePlayer();
         setBowlEnable(board.toString());
 
 
     }
 
-    private void disableAll() {
+  /*  private void disableAll() {
 
         for(int i=0;i<Constants.numberOfBowls;i++){
             bowls1.get(i).setEnabled(false);
@@ -113,35 +108,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
 
     }
-
-    public void setName1(View arg0){
-
-       if(!arg0.isInEditMode()){
-           arg0.setEnabled(false);
-       }
-
-    }
-
-    public void setName2(View arg0){
-
-    }
-
-   /* private void setNamePlayer() {
-
-        namePlayer1.setEnabled(true);
-        namePlayer1.setFocusable(true);
-        while(namePlayer1.isInEditMode()){ }
-        namePlayer1.setEnabled(false);
-
-        namePlayer2.setEnabled(true);
-        namePlayer2.setFocusable(true);
-        while(namePlayer2.isInEditMode()){ }
-        namePlayer2.setEnabled(false);
-
-    }*/
-
-
-    @Override
+*/
+     @Override
     public void onClick(View v) {
 
         int index=0;
@@ -157,10 +125,10 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }
         }
 
-      // moving seeds
+        // moving seeds
         board.seedingPhase(index);
 
-        setBowlEnable(board.toString());
+       //setBowlEnable(board.toString());
         int isFinish= board.checkGameOver();
         setView(board.toString());
         setBowlEnable(board.toString());
@@ -169,6 +137,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     }
 
+
+    // method to show an alert message
     private void OnBack(int finish) {
 
         AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
@@ -213,6 +183,19 @@ public class GameActivity extends Activity implements View.OnClickListener {
             bowls2.get(i).setOnClickListener(this);
         }
     }
+
+    private void setNamePlayer(){
+
+        Alert alert=new Alert();
+        alert.show(getFragmentManager(),"My Alert");
+        //View v=alert.getView();
+       // EditText name=(EditText)v.findViewById(R.id.namep);
+       // String nome=name.getText().toString();
+
+        //namePlayer1.setText(nome);
+        namePlayer1.setEnabled(false);
+      }
+
 
     private void setView(String s) {
 
