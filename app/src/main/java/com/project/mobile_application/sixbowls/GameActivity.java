@@ -26,6 +26,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     TextView txt;
 
+    TextView namePlayer1;
+    TextView namePlayer2;
+
     GameBoard board;
     GameBoardFactory factory = new GameBoardFactory();
 
@@ -83,6 +86,12 @@ public class GameActivity extends Activity implements View.OnClickListener {
         tr1 = (Button)findViewById(R.id.button9);
         tr2 = (Button)findViewById(R.id.button10);
 
+        namePlayer1=(TextView)findViewById(R.id.editText);
+        namePlayer1.setEnabled(false);
+        namePlayer2=(TextView)findViewById(R.id.editText2);
+        namePlayer2.setEnabled(false);
+
+
        /*
         //bowl1.setOnClickListener(this);
         bowl2 = (Button)findViewById(R.id.button6);
@@ -116,11 +125,25 @@ public class GameActivity extends Activity implements View.OnClickListener {
        */
 
         setOnClick();
+        setNamePlayer();
         setBowlEnable(board.toString());
 
 
     }
 
+    private void setNamePlayer() {
+
+        namePlayer1.setEnabled(true);
+        namePlayer1.setFocusable(true);
+        while(namePlayer1.isInEditMode()){ }
+        namePlayer1.setEnabled(false);
+
+        namePlayer2.setEnabled(true);
+        namePlayer2.setFocusable(true);
+        while(namePlayer2.isInEditMode()){ }
+        namePlayer2.setEnabled(false);
+
+    }
 
 
     @Override
@@ -141,8 +164,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
       // moving seeds
         board.seedingPhase(index);
+
+        setBowlEnable(board.toString());
         int isFinish= board.checkGameOver();
         setView(board.toString());
+        setBowlEnable(board.toString());
 
         if((isFinish==1)||isFinish==0||isFinish==2){ /* cosa succede quando finisce la partita */ }
 

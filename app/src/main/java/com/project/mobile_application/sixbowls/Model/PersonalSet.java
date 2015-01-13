@@ -28,7 +28,7 @@ public interface PersonalSet {
      * method that reveal if the last seed was dropped in the tray
      * @return : true if last seed was dropped in the tray, false otherwise
      */
-    public boolean isLastSeedInTraY();
+    public boolean isTurnSwitcher();
 
     /**
      * this method checks all the bowls in this set and return true if they are empty
