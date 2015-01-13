@@ -48,7 +48,7 @@ public class GameBoard {
                 seedMoving = setPlayerOne.innerSeeding(-1,seedMoving);
           }
           //assign the next active state
-          if( !setPlayerOne.isLastSeedInTraY()){
+          if( !setPlayerOne.isTurnSwitcher()){
               setPlayerOne.setActive(false);
               setPlayerTwo.setActive(true);
           }
@@ -72,7 +72,7 @@ public class GameBoard {
                 seedMoving = setPlayerTwo.innerSeeding(-1,seedMoving);
             }
             //assign the next active state
-            if( !setPlayerTwo.isLastSeedInTraY()){
+            if( !setPlayerTwo.isTurnSwitcher()){
                 setPlayerTwo.setActive(false);
                 setPlayerOne.setActive(true);
             }

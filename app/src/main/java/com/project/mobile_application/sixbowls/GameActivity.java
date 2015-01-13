@@ -141,6 +141,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
       // moving seeds
         board.seedingPhase(index);
+
+        setBowlEnable(board.toString());
         int isFinish= board.checkGameOver();
         setView(board.toString());
 

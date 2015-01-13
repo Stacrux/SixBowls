@@ -22,7 +22,7 @@ public class PersonalSetStandard implements PersonalSet {
     //the field active indicates if this set belongs to the active player, the one playing
     //during the turn
     private boolean active;
-    private boolean lastSeedInTray = false;
+    private boolean turnSwitcher = false;
     private boolean lastBowlEmpty = false;
     private int lastBowlIdentifier = 0;
 
@@ -47,9 +47,9 @@ public class PersonalSetStandard implements PersonalSet {
      * @return : true if last seed was dropped in the tray, false otherwise
      */
     @Override
-    public boolean isLastSeedInTraY() {
-        boolean resetCondition = lastSeedInTray;
-        lastSeedInTray = false;
+    public boolean isTurnSwitcher() {
+        boolean resetCondition = turnSwitcher;
+        turnSwitcher = false;
         return resetCondition;
     }
 
@@ -141,6 +141,11 @@ public class PersonalSetStandard implements PersonalSet {
      */
     @Override
     public int innerSeeding(int bowlIdentifier, int seedsMoving) {
+        
+        if(seedsMoving == 0){
+            turnSwitcher = true;
+        }
+        
         //save the number of moving seeds that will be returned, for being moved in the next set
         int seedsMovingTemp = seedsMoving;
         //if : is this the set of the active player (the one who chose the move) ?
@@ -164,7 +169,7 @@ public class PersonalSetStandard implements PersonalSet {
             if(seedsMovingTemp > 0){
                 tray.increase_seeds_count(1);
                 seedsMovingTemp -= 1;
-                if(seedsMovingTemp == 0){ lastSeedInTray = true; }
+                if(seedsMovingTemp == 0){ turnSwitcher = true; }
             }
         }
         //otherwise this is the set of the inactive player
