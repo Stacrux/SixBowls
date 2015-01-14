@@ -24,7 +24,7 @@ public class Alert extends DialogFragment {
         LayoutInflater inflater=getActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_msg,null);
         builder.setMessage("Set name Player");
-       // EditText name=(EditText)v.findViewById(R.id.namep);
+        //EditText name=(EditText)v.findViewById(R.id.namep);
         builder.setView(v);
 
         builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {

@@ -306,14 +306,12 @@
             android:layout_height="wrap_content"
             android:textColor="@color/abc_search_url_text"
             android:id="@+id/editText1"
-            android:onClick="setName1"
             android:text="Set name Player1" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editText2"
-            android:onClick="setName2"
             android:text="Set name Player2" />
 
     </LinearLayout>

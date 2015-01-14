@@ -2,12 +2,16 @@ package com.project.mobile_application.sixbowls;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +33,7 @@ import java.util.ArrayList;
  */
 public class GameActivity extends Activity implements View.OnClickListener {
 
-    TextView txt;
-
+    String name=null;
     EditText namePlayer1;
     EditText namePlayer2;
 
@@ -40,20 +43,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     ArrayList<Button> bowls1;
     ArrayList<Button> bowls2;
 
-    Button bowl1;
-    Button bowl2;
-    Button bowl3;
-    Button bowl4;
-    Button bowl5;
-    Button bowl6;
     Button tr1;
-
-    Button bowl7;
-    Button bowl8;
-    Button bowl9;
-    Button bowl10;
-    Button bowl11;
-    Button bowl12;
     Button tr2;
 
 
@@ -92,7 +82,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
         tr2 = (Button)findViewById(R.id.button10);
 
         setOnClick();
+
+      // -------------------------------------------------------  Per settare i nomi
         //setNamePlayer();
+        //namePlayer1.setText(name);
+     // ------------------------------------------------------------------------------------
         //disableAll();
 
         setBowlEnable(board.toString());
@@ -128,7 +122,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
         // moving seeds
         board.seedingPhase(index);
 
-       //setBowlEnable(board.toString());
         int isFinish= board.checkGameOver();
         setView(board.toString());
         setBowlEnable(board.toString());
@@ -186,18 +179,26 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     private void setNamePlayer(){
 
-        Alert alert=new Alert();
-        alert.show(getFragmentManager(),"My Alert");
-        //View v=alert.getView();
-       // EditText name=(EditText)v.findViewById(R.id.namep);
-       // String nome=name.getText().toString();
+        final EditText input = new EditText(this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        //namePlayer1.setText(nome);
-        namePlayer1.setEnabled(false);
-      }
+        alert.setMessage("Set name palyer 1");
+
+        // Set an EditText view to get user input
+        alert.setView(input);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                name=input.getText().toString();
+            }
+        });
+
+        alert.show();
+    }
 
 
-    private void setView(String s) {
+
+      private void setView(String s) {
 
         int[]bowlTemp1;
         int[]bowlTemp2;
