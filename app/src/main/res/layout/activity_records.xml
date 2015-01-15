@@ -12,6 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="DELETE ALL"
+        android:id="@+id/delete_all_button"
+        android:layout_gravity="right"
+        android:background="#ffff475a" />
+
     <ListView
         android:id="@+id/record_list"
         android:scrollbars="vertical"

@@ -1,14 +1,17 @@
 package com.project.mobile_application.sixbowls;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,35 +28,28 @@ import java.util.List;
 public class RecordsActivity extends Activity {
 
     DataBaseHelper database = new DataBaseHelper(this);
-
-    //DA RIMUOVERE DOPO CHE ABBIAMO APPURATO IL FUNZIONAMENTO
-    Record dummyRecord = new Record("Giacomo", 3, 2, 1, 6, 20);
-    Record dummyRecord2 = new Record("Ignazio", 5, 2, 1, 8, 30);
-    Record dummyRecord3 = new Record("Carlo", 5, 2, 1, 8, 44);
-    Record dummyRecord4 = new Record("Marco", 5, 2, 7, 14, 13);
-    Record dummyRecord5 = new Record("Giorgio", 5, 2, 3, 10, 22);
-    //DA RIMUOVERE DOPO CHE ABBIAMO APPURATO IL FUNZIONAMENTO
+    Button deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
-        //imposta l'orientamento dello schermo
+
+        //set the screen into landscape mode
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        //nascondi statusbar
+        //hide status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //DA RIMUOVERE DOPO CHE ABBIAMO APPURATO IL FUNZIONAMENTO
-        this.deleteDatabase("GameRecords");
-        /*
-        database.addRecord(dummyRecord, MatchResult.LOST);
-        database.addRecord(dummyRecord2, MatchResult.LOST);
-        database.addRecord(dummyRecord3, MatchResult.LOST);
-        database.addRecord(dummyRecord4, MatchResult.LOST);
-        database.addRecord(dummyRecord5, MatchResult.LOST);
-        */
-        //DA RIMUOVERE DOPO CHE ABBIAMO APPURATO IL FUNZIONAMENTO
+        deleteButton = (Button)findViewById(R.id.delete_all_button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( v.getId() == R.id.delete_all_button){
+                    dropRecords();
+                }
+            }
+        });
 
         ArrayList<String> recordsStrings = new ArrayList<String>();
         if (doesDatabaseExist(this, "GameRecords")) {
@@ -81,6 +77,18 @@ public class RecordsActivity extends Activity {
 
 
         recordsListView.setAdapter(arrayAdapter);
+
+    }
+
+    private void dropRecords() {
+
+        this.deleteDatabase("GameRecords");
+        //alert box stating that names cannot contain blank spaces
+        AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+        alertDlg.setMessage(" All data have been removed");
+        alertDlg.setCancelable(true);
+        alertDlg.setPositiveButton("OK", null);
+        alertDlg.create().show();
 
     }
 

@@ -133,12 +133,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         null); // h. limit
 
         // 3. if we got results get the first one
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        // 4. build record object
-        record = new Record(cursor.getString(0),cursor.getInt(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5));
-
+        if (cursor != null) {
+            if(cursor.moveToFirst())
+            // 4. build record object
+            record = new Record(cursor.getString(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5));
+        }
         // 5. return record
         return record;
     }
@@ -157,7 +156,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int success = 0;
         Record lastRecord = getRecord(newRecord.getPlayerName());
 
-        if( getRecord(newRecord.getPlayerName()) == null ){
+        if( lastRecord == null ){
             addRecord(newRecord,result);
         }
         else {

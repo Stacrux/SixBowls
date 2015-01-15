@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
+import com.project.mobile_application.sixbowls.Model.MatchResult;
 import com.project.mobile_application.sixbowls.Model.Settings;
 
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class GameActivity extends Activity implements View.OnClickListener {
 
     Settings settings = new Settings();
+    DataBaseHelper database = new DataBaseHelper(this);
 
     String name=null;
     EditText namePlayer1;
@@ -52,15 +54,16 @@ public class GameActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //imposta l'orientamento dello schermo
+        //set sceen orientation
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        //nascondi statusbar
+        //hide status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         String gameType = getIntent().getExtras().getString("gameType");
 
-        board = factory.getGameBoard(gameType);  // create a game board
+        // create a game board
+        board = factory.getGameBoard(gameType);
 
         bowls1=new ArrayList<Button>();
         bowls1.add((Button)findViewById(R.id.bowl_p1_0));
@@ -95,18 +98,18 @@ public class GameActivity extends Activity implements View.OnClickListener {
         namePlayer2.setText("SET PLAYER TWO NAME");
     }
 
+    /**
+     * this method perform the actions associated to the buttons, before the game starts the only
+     * enabled button is "start game", the actions for starting a game are expressed into the first
+     * if branch. Then the button "start game" becomes disabled and all the bowls get enabled.
+     * The actions for a bowl touched events are stated in the else branch.
+     * @param v : the view object pressed on the screen
+     */
     @Override
     public void onClick(View v) {
+        //if the game is not started yet let's make the preparations
         if( v.getId() == R.id.start_game ){
-            if( namePlayer1.getText().toString().equals(namePlayer2.getText().toString()) ){
-                //alert box stating that the players must have different nicknames
-                AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
-                alertDlg.setMessage(" Players can't have the same name!!");
-                alertDlg.setCancelable(true);
-                alertDlg.setPositiveButton("OK", null);
-                alertDlg.create().show();
-            }
-            else{
+            if( noNamingProblems() ){
                 if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") &&
                         namePlayer2.getText().toString().equals("SET PLAYER TWO NAME") ){
                     namePlayer1.setText("PLAYER ONE");
@@ -125,22 +128,120 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 setBowlsEnabled(board.toString());
             }
         }
+        //otherwise the game has already been started, here is the normal move
         else{
             board.seedingPhase(castBowlID( v.getId()));
-            int isFinish = board.checkGameOver();
+            int isFinished = board.checkGameOver();
             setView(board.toString());
             setBowlsEnabled(board.toString());
-            if((isFinish==1)||isFinish==0||isFinish==2){ OnBack(isFinish);}
+            if((isFinished==1)||isFinished==0||isFinished==2){
+                updateDatabase(isFinished);
+                endingAlert(isFinished);}
+        }
+    }
+
+    /**
+     * this method checks the names inserted and
+     * @return : false if there are issues, true otherwise
+     */
+    private boolean noNamingProblems() {
+        boolean namesAreAccepted = true;
+        String nameP1 = namePlayer1.getText().toString();
+        String nameP2 = namePlayer2.getText().toString();
+
+        //checks if the two players have inserted the same names
+        if( nameP1.equals(nameP2) ){
+            namesAreAccepted = false;
+            //alert box stating that the players must have different nicknames
+            AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+            alertDlg.setMessage(" Players can't have the same name!!");
+            alertDlg.setCancelable(true);
+            alertDlg.setPositiveButton("OK", null);
+            alertDlg.create().show();
+        }
+
+        //check if the two players have used forbidden chars
+        for( int e = 0; e < nameP1.length(); e++){
+            if(nameP1.charAt(e) == ' '){
+                namesAreAccepted = false;
+                //alert box stating that names cannot contain blank spaces
+                AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+                alertDlg.setMessage(" Names cannot contain blank spaces");
+                alertDlg.setCancelable(true);
+                alertDlg.setPositiveButton("OK", null);
+                alertDlg.create().show();
+            }
+        }
+        for( int e = 0; e < nameP2.length(); e++){
+            if(nameP2.charAt(e) == ' '){
+                namesAreAccepted = false;
+                //alert box stating that names cannot contain blank spaces
+                AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+                alertDlg.setMessage(" Names cannot contain blank spaces");
+                alertDlg.setCancelable(true);
+                alertDlg.setPositiveButton("OK", null);
+                alertDlg.create().show();
+            }
+        }
+
+        //checks if the one of the names inserted is an empty string
+        if( nameP1.length() == 0 || nameP2.length() == 0){
+            namesAreAccepted = false;
+            //alert box stating that names cannot contain an empry string
+            AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+            alertDlg.setMessage("The names' field cannot be empty");
+            alertDlg.setCancelable(true);
+            alertDlg.setPositiveButton("OK", null);
+            alertDlg.create().show();
+        }
+
+
+        return namesAreAccepted;
+    }
+
+    /**
+     * method for updating the database called at the end of a match, the data are stored only if
+     * a name was set at the beginning
+     * @param isFinished : teh result of the match, 0 for player one winning, 1 for player two winning, 2 for a tie
+     */
+    private void updateDatabase(int isFinished) {
+        //saving player one records
+        if( !namePlayer1.getText().toString().equals("PLAYER ONE") ){
+            Record recordP1 = new Record( namePlayer1.getText().toString(), 0,0,0,0, Integer.parseInt(trayP1.getText().toString()));
+            switch (isFinished){
+                case 0 : database.updateRecord(recordP1, MatchResult.WIN); break;
+                case 1 : database.updateRecord(recordP1, MatchResult.LOST); break;
+                case 2 : database.updateRecord(recordP1, MatchResult.TIE); break;
+                default : break;
+            }
+        }
+        //saving player two record
+        if( !namePlayer2.getText().toString().equals("PLAYER TWO") ){
+            Record recordP1 = new Record( namePlayer2.getText().toString(), 0,0,0,0, Integer.parseInt(trayP2.getText().toString()));
+            switch (isFinished){
+                case 0 : database.updateRecord(recordP1, MatchResult.LOST); break;
+                case 1 : database.updateRecord(recordP1, MatchResult.WIN); break;
+                case 2 : database.updateRecord(recordP1, MatchResult.TIE); break;
+                default : break;
+            }
         }
     }
 
 
-    // method to show an alert message
-    private void OnBack(int finish) {
+    /**
+     * this method shows an alert displayng who won the match and getting the users to the initial activity
+     * @param finish : the result of the game, 0 for player one winning, 1 for player two winning, 2 for a tie
+     */
+    private void endingAlert(int finish) {
         AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
-           if(!(finish==2))alertDlg.setMessage("Player"+(finish+1)+" is the winner!");
-           else
-              alertDlg.setMessage(" The game ended in a draw ");
+           if( finish == 0) {
+               alertDlg.setMessage(namePlayer1.getText().toString() + " is the winner!");
+           }else if(finish == 1){
+               alertDlg.setMessage(namePlayer2.getText().toString() + " is the winner!");
+           }
+           else{
+               alertDlg.setMessage(" The game ended in a draw ");
+           }
         alertDlg.setCancelable(false);
         alertDlg.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -181,26 +282,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }
         }
     }
-/*
-    private void setNamePlayer(){
-
-        final EditText input = new EditText(this);
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setMessage("Set name palyer 1");
-
-        // Set an EditText view to get user input
-        alert.setView(input);
-
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                name=input.getText().toString();
-            }
-        });
-
-        alert.show();
-    }
-*/
 
     /**
      * this method breaks the gameboard configuration string in the two sets strings and call the method for
