@@ -11,6 +11,7 @@ import com.project.mobile_application.sixbowls.Model.Tray;
 import com.project.mobile_application.sixbowls.Model.StandardGame.TrayStandard;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Martino on 09/01/2015.
@@ -19,7 +20,6 @@ public class GameBoardFactory {
 
     public GameBoard getGameBoard(String configuration){
 
-        int i =1;
         GameBoard gameboard = null;
 
         if( configuration.equals("p1vsp2")){
@@ -38,8 +38,13 @@ public class GameBoardFactory {
             }
             Tray trayPlayerOne = new TrayStandard(Constants.initialTrayContent);
             Tray trayPlayerTwo = new TrayStandard(Constants.initialTrayContent);
-            PersonalSet setPlayerOne = new PersonalSetStandard(playerOne, bowlsPlayerOne, trayPlayerOne, true);
-            PersonalSet setPlayerTwo = new PersonalSetStandard(playerTwo, bowlsPlayerTwo, trayPlayerTwo, false);
+
+            Random randomActive = new Random();
+            boolean active = randomActive.nextBoolean();
+
+            PersonalSet setPlayerOne = new PersonalSetStandard(playerOne, bowlsPlayerOne, trayPlayerOne, active);
+            PersonalSet setPlayerTwo = new PersonalSetStandard(playerTwo, bowlsPlayerTwo, trayPlayerTwo, !active);
+
             gameboard = new GameBoard(setPlayerOne,setPlayerTwo);
         }
         return gameboard;
