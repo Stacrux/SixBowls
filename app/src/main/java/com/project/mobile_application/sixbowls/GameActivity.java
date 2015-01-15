@@ -109,12 +109,12 @@ public class GameActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         //if the game is not started yet let's make the preparations
         if( v.getId() == R.id.start_game ){
+            if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") &&
+                    namePlayer2.getText().toString().equals("SET PLAYER TWO NAME") ){
+                namePlayer1.setText("PLAYER_ONE");
+                namePlayer2.setText("PLAYER_TWO");
+            }
             if( noNamingProblems() ){
-                if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") &&
-                        namePlayer2.getText().toString().equals("SET PLAYER TWO NAME") ){
-                    namePlayer1.setText("PLAYER ONE");
-                    namePlayer2.setText("PLAYER TWO");
-                }
                 namePlayer1.setEnabled(false);
                 namePlayer2.setEnabled(false);
                 startGame.setEnabled(false);
@@ -141,7 +141,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     }
 
     /**
-     * this method checks the names inserted and
+     * this method checks the names inserted, a valid
      * @return : false if there are issues, true otherwise
      */
     private boolean noNamingProblems() {
@@ -172,11 +172,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 alertDlg.create().show();
             }
         }
-        for( int e = 0; e < nameP2.length(); e++){
-            if(nameP2.charAt(e) == ' '){
+        for( int e = 0; e < nameP2.length(); e++) {
+            if (nameP2.charAt(e) == ' ') {
                 namesAreAccepted = false;
                 //alert box stating that names cannot contain blank spaces
-                AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+                AlertDialog.Builder alertDlg = new AlertDialog.Builder(this);
                 alertDlg.setMessage(" Names cannot contain blank spaces");
                 alertDlg.setCancelable(true);
                 alertDlg.setPositiveButton("OK", null);
@@ -185,16 +185,15 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
 
         //checks if the one of the names inserted is an empty string
-        if( nameP1.length() == 0 || nameP2.length() == 0){
+        if( nameP1.length() == 0 || nameP2.length() == 0) {
             namesAreAccepted = false;
             //alert box stating that names cannot contain an empry string
-            AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+            AlertDialog.Builder alertDlg = new AlertDialog.Builder(this);
             alertDlg.setMessage("The names' field cannot be empty");
             alertDlg.setCancelable(true);
             alertDlg.setPositiveButton("OK", null);
             alertDlg.create().show();
         }
-
 
         return namesAreAccepted;
     }
@@ -206,7 +205,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
      */
     private void updateDatabase(int isFinished) {
         //saving player one records
-        if( !namePlayer1.getText().toString().equals("PLAYER ONE") ){
+        if( !namePlayer1.getText().toString().equals("PLAYER_ONE") ){
             Record recordP1 = new Record( namePlayer1.getText().toString(), 0,0,0,0, Integer.parseInt(trayP1.getText().toString()));
             switch (isFinished){
                 case 0 : database.updateRecord(recordP1, MatchResult.WIN); break;
@@ -216,7 +215,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }
         }
         //saving player two record
-        if( !namePlayer2.getText().toString().equals("PLAYER TWO") ){
+        if( !namePlayer2.getText().toString().equals("PLAYER_TWO") ){
             Record recordP1 = new Record( namePlayer2.getText().toString(), 0,0,0,0, Integer.parseInt(trayP2.getText().toString()));
             switch (isFinished){
                 case 0 : database.updateRecord(recordP1, MatchResult.LOST); break;
