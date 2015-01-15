@@ -2,28 +2,18 @@ package com.project.mobile_application.sixbowls;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.project.mobile_application.sixbowls.Model.Bowl;
 import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
-import com.project.mobile_application.sixbowls.Model.Player;
-import com.project.mobile_application.sixbowls.Model.StandardGame.BowlStandard;
-import com.project.mobile_application.sixbowls.Model.StandardGame.PersonalSetStandard;
-import com.project.mobile_application.sixbowls.Model.StandardGame.TrayStandard;
+import com.project.mobile_application.sixbowls.Model.Settings;
+
 
 import java.util.ArrayList;
 
@@ -32,6 +22,8 @@ import java.util.ArrayList;
  * Created by Martino on 11/01/2015.
  */
 public class GameActivity extends Activity implements View.OnClickListener {
+
+    Settings settings = new Settings();
 
     String name=null;
     EditText namePlayer1;
@@ -43,10 +35,18 @@ public class GameActivity extends Activity implements View.OnClickListener {
     ArrayList<Button> bowls1;
     ArrayList<Button> bowls2;
 
-    Button tr1;
-    Button tr2;
+    Button trayP1;
+    Button trayP2;
 
+    Button startGame;
 
+    Thread animation = new Thread();
+
+    /**
+     * Oncreate method for this activity, it adds bowls and trays as buttons,
+     * sets the listener for the bowls and set which buttons are enabled and which not
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,77 +63,80 @@ public class GameActivity extends Activity implements View.OnClickListener {
         board = factory.getGameBoard(gameType);  // create a game board
 
         bowls1=new ArrayList<Button>();
-        bowls1.add((Button)findViewById(R.id.button5));
-        bowls1.add((Button)findViewById(R.id.button6));
-        bowls1.add((Button)findViewById(R.id.button7));
-        bowls1.add((Button)findViewById(R.id.button8));
-        bowls1.add((Button)findViewById(R.id.button11));
-        bowls1.add((Button)findViewById(R.id.button12));
+        bowls1.add((Button)findViewById(R.id.bowl_p1_0));
+        bowls1.add((Button)findViewById(R.id.bowl_p1_1));
+        bowls1.add((Button)findViewById(R.id.bowl_p1_2));
+        bowls1.add((Button)findViewById(R.id.bowl_p1_3));
+        bowls1.add((Button)findViewById(R.id.bowl_p1_4));
+        bowls1.add((Button)findViewById(R.id.bowl_p1_5));
 
         bowls2=new ArrayList<Button>();
-        bowls2.add((Button)findViewById(R.id.button13));
-        bowls2.add((Button)findViewById(R.id.button14));
-        bowls2.add((Button)findViewById(R.id.button15));
-        bowls2.add((Button)findViewById(R.id.button16));
-        bowls2.add((Button)findViewById(R.id.button17));
-        bowls2.add((Button)findViewById(R.id.button18));
+        bowls2.add((Button)findViewById(R.id.bowl_p2_0));
+        bowls2.add((Button)findViewById(R.id.bowl_p2_1));
+        bowls2.add((Button)findViewById(R.id.bowl_p2_2));
+        bowls2.add((Button)findViewById(R.id.bowl_p2_3));
+        bowls2.add((Button)findViewById(R.id.bowl_p2_4));
+        bowls2.add((Button)findViewById(R.id.bowl_p2_5));
 
-        tr1 = (Button)findViewById(R.id.button9);
-        tr2 = (Button)findViewById(R.id.button10);
-
-        setOnClick();
-
-      // -------------------------------------------------------  Per settare i nomi
-        //setNamePlayer();
-        //namePlayer1.setText(name);
-     // ------------------------------------------------------------------------------------
-        //disableAll();
-
-        setBowlEnable(board.toString());
-
-
-    }
-
-  /*  private void disableAll() {
+        trayP1 = (Button)findViewById(R.id.tray_p1);
+        trayP2 = (Button)findViewById(R.id.tray_p2);
 
         for(int i=0;i<Constants.numberOfBowls;i++){
-            bowls1.get(i).setEnabled(false);
-            bowls2.get(i).setEnabled(false);
+            bowls1.get(i).setOnClickListener(this);
+            bowls2.get(i).setOnClickListener(this);
         }
 
+        setBowlsEnabled("ALL DISABLED");
+        startGame = (Button)findViewById(R.id.start_game);
+        startGame.setOnClickListener(this);
+        namePlayer1 = (EditText)findViewById(R.id.name_p1);
+        namePlayer2 = (EditText)findViewById(R.id.name_p2);
+        namePlayer1.setText("SET PLAYER ONE NAME");
+        namePlayer2.setText("SET PLAYER TWO NAME");
     }
-*/
-     @Override
-    public void onClick(View v) {
 
-        int index=0;
-        int i= Integer.parseInt("" + board.toString().charAt(0));
-       if(i==1){
-           for(int k=0;k<Constants.numberOfBowls;k++){
-               if(bowls1.get(k).getId()==v.getId())index=(5-k);
-           }
-        }
-        else{
-            for(int k=0;k<Constants.numberOfBowls;k++){
-                if(bowls2.get(k).getId()==v.getId())index=k;
+    @Override
+    public void onClick(View v) {
+        if( v.getId() == R.id.start_game ){
+            if( namePlayer1.getText().toString().equals(namePlayer2.getText().toString()) ){
+                //alert box stating that the players must have different nicknames
+                AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
+                alertDlg.setMessage(" Players can't have the same name!!");
+                alertDlg.setCancelable(true);
+                alertDlg.setPositiveButton("OK", null);
+                alertDlg.create().show();
+            }
+            else{
+                if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") &&
+                        namePlayer2.getText().toString().equals("SET PLAYER TWO NAME") ){
+                    namePlayer1.setText("PLAYER ONE");
+                    namePlayer2.setText("PLAYER TWO");
+                }
+                namePlayer1.setEnabled(false);
+                namePlayer2.setEnabled(false);
+                startGame.setEnabled(false);
+                if( board.toString().charAt(0) == '1'){
+                    startGame.setText(namePlayer1.getText() + "'s TURN");
+                    startGame.setBackgroundResource(R.drawable.p1_tray);
+                }else{
+                    startGame.setText(namePlayer2.getText() + "'s TURN");
+                    startGame.setBackgroundResource(R.drawable.p2_tray);
+                }
+                setBowlsEnabled(board.toString());
             }
         }
-
-        // moving seeds
-        board.seedingPhase(index);
-
-        int isFinish= board.checkGameOver();
-        setView(board.toString());
-        setBowlEnable(board.toString());
-
-        if((isFinish==1)||isFinish==0||isFinish==2){ OnBack(isFinish);}
-
+        else{
+            board.seedingPhase(castBowlID( v.getId()));
+            int isFinish = board.checkGameOver();
+            setView(board.toString());
+            setBowlsEnabled(board.toString());
+            if((isFinish==1)||isFinish==0||isFinish==2){ OnBack(isFinish);}
+        }
     }
 
 
     // method to show an alert message
     private void OnBack(int finish) {
-
         AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
            if(!(finish==2))alertDlg.setMessage("Player"+(finish+1)+" is the winner!");
            else
@@ -152,31 +155,33 @@ public class GameActivity extends Activity implements View.OnClickListener {
     }
 
 
-    private void setBowlEnable(String conf){
-
-        if(Integer.parseInt(""+conf.charAt(0))==1){ // is active palyer 1  disable palyer 2
-           for(int i=0;i<Constants.numberOfBowls;i++){
-               bowls1.get(i).setEnabled(true);
-               bowls2.get(i).setEnabled(false);
-             }
-        }
-        else {
-
+    /**
+     * this method enables all the buttons belonging to the active player and disable all the others
+     * @param conf : the configuration of the current game board (gameboard.tostring), special
+     * command is conf = ALL DISABLED as expected disable all bowls
+     */
+    private void setBowlsEnabled(String conf){
+        if( conf.equals("ALL DISABLED")){
             for(int i=0;i<Constants.numberOfBowls;i++) {
-                bowls2.get(i).setEnabled(true);
                 bowls1.get(i).setEnabled(false);
+                bowls2.get(i).setEnabled(false);
+            }
+        }else{
+            if(Integer.parseInt(""+conf.charAt(0))==1){ // is active player 1  disable player 2
+                for(int i=0;i<Constants.numberOfBowls;i++){
+                    bowls1.get(i).setEnabled(true);
+                    bowls2.get(i).setEnabled(false);
+                }
+            }
+            else {
+                for(int i=0;i<Constants.numberOfBowls;i++) {
+                    bowls2.get(i).setEnabled(true);
+                    bowls1.get(i).setEnabled(false);
+                }
             }
         }
     }
-
-    private void setOnClick() {
-
-        for(int i=0;i<Constants.numberOfBowls;i++){
-            bowls1.get(i).setOnClickListener(this);
-            bowls2.get(i).setOnClickListener(this);
-        }
-    }
-
+/*
     private void setNamePlayer(){
 
         final EditText input = new EditText(this);
@@ -195,54 +200,94 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         alert.show();
     }
+*/
 
+    /**
+     * this method breaks the gameboard configuration string in the two sets strings and call the method for
+     * updating each one
+     * @param boardConfiguration : current game board configuration (gameboard.tostring)
+     */
+    private void setView(String boardConfiguration) {
+          
+        int middle = boardConfiguration.indexOf("Z");
+        String firstHalf = boardConfiguration.substring(0,middle);
+        String secondHalf = boardConfiguration.substring(middle+1,boardConfiguration.length());
 
+        setBowlsValues(bowls1, trayP1, firstHalf);
+        setBowlsValues(bowls2, trayP2, secondHalf);
 
-      private void setView(String s) {
-
-        int[]bowlTemp1;
-        int[]bowlTemp2;
-
-        int middle=s.indexOf("Z");
-        String firstMiddle=s.substring(0,middle);
-        String secondMiddle=s.substring(middle+1,s.length());
-
-        bowlTemp1=parsString(firstMiddle);
-        bowlTemp2=parsString(secondMiddle);
-
-         for(int x=0;x<Constants.numberOfBowls;x++){
-             bowls2.get(x).setText(String.valueOf(bowlTemp2[x]));
-            bowls1.get(x).setText(String.valueOf(bowlTemp1[5-x]));
-         }
-
-
-        tr1.setText(String.valueOf(bowlTemp1[6]));
-        tr2.setText(String.valueOf(bowlTemp2[6]));
-
-     }
-
-    private int[] parsString(String firstMiddle) {
-
-        int[] bowlTemp=new int[7];
-        firstMiddle=firstMiddle.substring(2,firstMiddle.length());
-        int x;
-        for(int i=0;i<5;i++){
-            x=firstMiddle.indexOf("B")-1;
-            if(x==0)
-                bowlTemp[i]=  Integer.parseInt(""+firstMiddle.charAt(x));
-            else
-                bowlTemp[i]=Integer.parseInt(firstMiddle.substring(0, x + 1));
-            firstMiddle=firstMiddle.substring(firstMiddle.indexOf("B") + 1, firstMiddle.length());
+        if( firstHalf.charAt(0) == '1'){
+            startGame.setText(namePlayer1.getText() + "'s TURN");
+            startGame.setBackgroundResource(R.drawable.p1_tray);
+        }else{
+            startGame.setText(namePlayer2.getText() + "'s TURN");
+            startGame.setBackgroundResource(R.drawable.p2_tray);
         }
 
-        x=firstMiddle.indexOf("T")-1;
-        if(x==0)
-            bowlTemp[5]= Integer.parseInt(""+firstMiddle.charAt(x));
-        else
-            bowlTemp[5]=Integer.parseInt(firstMiddle.substring(0, x + 1));
-
-        bowlTemp[6]=Integer.parseInt(""+firstMiddle.substring(firstMiddle.indexOf("T")+1,firstMiddle.length()));
-
-        return  bowlTemp;
     }
+
+
+
+    /**
+     * this methdod set the right values to be displayed inside a line of 6 button (the bowls) and a tray
+     * @param bowls : the line of buttons to be updated
+     * @param tray : the tray to be updated
+     * @param halfSet : a string of a Set configuration (YBXBXBXBXBXBXTX)
+     */
+    private void setBowlsValues(ArrayList<Button> bowls, Button tray, String halfSet) {
+        //String is of type YBXBXBXBXBXBXTX
+        //          pointer 0123456789.....
+        //this is why we start from position 1 and then we start the for cicle with pointerInsideString++
+        int pointerInsideString = 1;
+        for(int x = 0; x < Constants.numberOfBowls; x++){
+            pointerInsideString++;
+            String bowlValue = new String();
+            char separator = 'A';
+            while( separator != 'B' && separator != 'T' ){
+                bowlValue += halfSet.charAt(pointerInsideString);
+                pointerInsideString++;
+                separator = halfSet.charAt(pointerInsideString);
+            }
+            bowls.get(x).setText(bowlValue);
+        }
+        String trayValue = new String();
+        //here I have reached the 'T' , let's move on the next char
+        pointerInsideString++;
+        while(pointerInsideString < halfSet.length()){
+            trayValue += halfSet.charAt(pointerInsideString++);
+        }
+        tray.setText(trayValue);
+        
+    }
+
+    /**
+     * this method cast a specific id in the range of bowls ids to an INT between 0 and 5
+     * @param actualID : the identifier specified automatically
+     * @return the actual bowl identifier we need to use
+     */
+    private int castBowlID(int actualID){
+
+        int selectedBowl = -1;
+
+        if(bowls1.get(0).getId() == actualID || bowls2.get(0).getId() == actualID){
+            selectedBowl = 0;
+        }
+        if(bowls1.get(1).getId() == actualID || bowls2.get(1).getId() == actualID){
+            selectedBowl = 1;
+        }
+        if(bowls1.get(2).getId() == actualID || bowls2.get(2).getId() == actualID){
+            selectedBowl = 2;
+        }
+        if(bowls1.get(3).getId() == actualID || bowls2.get(3).getId() == actualID){
+            selectedBowl = 3;
+        }
+        if(bowls1.get(4).getId() == actualID || bowls2.get(4).getId() == actualID){
+            selectedBowl = 4;
+        }
+        if(bowls1.get(5).getId() == actualID || bowls2.get(5).getId() == actualID){
+            selectedBowl = 5;
+        }
+        return selectedBowl;
+    }
+
 }
