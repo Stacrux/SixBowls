@@ -18,45 +18,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button android:text="@string/p1vsp2"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Human VS Human"
         android:id="@+id/button_p1_vs_p2"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/button_p1_vs_ai"
-        android:layout_alignStart="@+id/button_p1_vs_ai" />
+        android:layout_below="@+id/main_title"
+        android:layout_alignRight="@+id/main_title"
+        android:layout_alignEnd="@+id/main_title"
+        android:layout_marginRight="21dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginTop="31dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/p1vsai"
+        android:text="Human VS Android"
         android:id="@+id/button_p1_vs_ai"
         android:layout_below="@+id/button_p1_vs_p2"
-        android:layout_toLeftOf="@+id/button_rules"
-        android:layout_toStartOf="@+id/button_rules"
-        android:layout_marginRight="23dp"
-        android:layout_marginEnd="23dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/statistics"
-        android:id="@+id/button_stats"
-        android:layout_marginRight="164dp"
-        android:layout_marginEnd="164dp"
-        android:layout_below="@+id/button_p1_vs_p2"
-        android:layout_alignRight="@+id/main_title"
-        android:layout_alignEnd="@+id/main_title" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/game_rules"
-        android:id="@+id/button_rules"
-        android:layout_above="@+id/button_stats"
         android:layout_alignLeft="@+id/button_stats"
         android:layout_alignStart="@+id/button_stats" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Rules"
+        android:id="@+id/rules"
+        android:layout_below="@+id/button_stats"
+        android:layout_alignLeft="@+id/button_stats"
+        android:layout_alignStart="@+id/button_stats" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Old records"
+        android:id="@+id/button_stats"
+        android:layout_below="@+id/button_p1_vs_ai"
+        android:layout_alignLeft="@+id/button_p1_vs_p2"
+        android:layout_alignStart="@+id/button_p1_vs_p2" />
 
 
 </RelativeLayout>
