@@ -304,12 +304,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/name_p2" />
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="VS"
-            android:id="@+id/textView2"
+            android:text="START GAME"
+            android:id="@+id/start_game"
             android:layout_gravity="center_horizontal" />
 
         <EditText
@@ -317,13 +316,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/name_p1"
             android:textColor="@color/abc_search_url_text" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="START GAME"
-            android:id="@+id/start_game"
-            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 
