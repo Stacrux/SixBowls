@@ -24,9 +24,9 @@ public class MainActivity extends Activity{//ActionBarActivity{
         super.onCreate(savedInstanceState);
 
 
-        //imposta l'orientamento dello schermo
+        //set screen orintation into landscape mode
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        //nascondi statusbar
+        //hide statusbar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -80,13 +80,6 @@ public class MainActivity extends Activity{//ActionBarActivity{
 
     }
 
-
-    public void playGame(View view)
-    {
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("gameType","p1vsp2");
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
