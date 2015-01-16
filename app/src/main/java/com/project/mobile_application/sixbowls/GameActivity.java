@@ -137,7 +137,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
             setBowlsEnabled(board.toString());
             if((isFinished==1)||isFinished==0||isFinished==2){
                 updateDatabase(isFinished);
-                endingAlert(isFinished);}
+                endingAlert(isFinished);
+                setBowlsEnabled("ALL DISABLED");
+            }
         }
     }
 
@@ -217,11 +219,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
         //saving player two record
         if( !namePlayer2.getText().toString().equals("PLAYER_TWO") ){
-            Record recordP1 = new Record( namePlayer2.getText().toString(), 0,0,0,0, Integer.parseInt(trayP2.getText().toString()));
+            Record recordP2 = new Record( namePlayer2.getText().toString(), 0,0,0,0, Integer.parseInt(trayP2.getText().toString()));
             switch (isFinished){
-                case 0 : database.updateRecord(recordP1, MatchResult.LOST); break;
-                case 1 : database.updateRecord(recordP1, MatchResult.WIN); break;
-                case 2 : database.updateRecord(recordP1, MatchResult.TIE); break;
+                case 0 : database.updateRecord(recordP2, MatchResult.LOST); break;
+                case 1 : database.updateRecord(recordP2, MatchResult.WIN); break;
+                case 2 : database.updateRecord(recordP2, MatchResult.TIE); break;
                 default : break;
             }
         }

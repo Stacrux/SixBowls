@@ -136,9 +136,6 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
             int isFinished = board.checkGameOver();
             setView(board.toString());
             setBowlsEnabled(board.toString());
-            if((isFinished==1)||isFinished==0||isFinished==2){
-                updateDatabase(isFinished);
-                endingAlert(isFinished);}
 
             while(board.toString().charAt(0) == '0' && isFinished == -1){
                 int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
@@ -151,7 +148,9 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
 
             if((isFinished==1)||isFinished==0||isFinished==2){
                 updateDatabase(isFinished);
-                endingAlert(isFinished);}
+                endingAlert(isFinished);
+                setBowlsEnabled("ALL DISABLED");
+            }
         }
     }
 
@@ -246,6 +245,15 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
                 default : break;
             }
         }
+        //saving computer two record
+        Record recordP2 = new Record( namePlayer2, 0,0,0,0, Integer.parseInt(trayP2.getText().toString()));
+        switch (isFinished){
+            case 0 : database.updateRecord(recordP2, MatchResult.LOST); break;
+            case 1 : database.updateRecord(recordP2, MatchResult.WIN); break;
+            case 2 : database.updateRecord(recordP2, MatchResult.TIE); break;
+            default : break;
+        }
+
     }
 
 
