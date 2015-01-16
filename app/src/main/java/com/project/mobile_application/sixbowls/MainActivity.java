@@ -17,6 +17,7 @@ public class MainActivity extends Activity{//ActionBarActivity{
     Button buttonP1VsP2;
     Button buttonP1VsAi;
     Button buttonStats;
+    Button buttonRules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,18 @@ public class MainActivity extends Activity{//ActionBarActivity{
                                                }
                                            }
         );
+
+        buttonRules = (Button)findViewById(R.id.button_rules);
+        buttonRules.setOnClickListener(new View.OnClickListener()
+                                       {
+                                           public void onClick(View v)
+                                           {
+                                               Intent i = new Intent(MainActivity.this,InstructionsActivity.class);
+                                               startActivity(i);
+                                           }
+                                       }
+        );
+
     }
 
 

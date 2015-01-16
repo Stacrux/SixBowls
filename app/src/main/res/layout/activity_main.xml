@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Rules"
-        android:id="@+id/rules"
+        android:id="@+id/button_rules"
         android:layout_below="@+id/button_stats"
         android:layout_alignLeft="@+id/button_stats"
         android:layout_alignStart="@+id/button_stats" />

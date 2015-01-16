@@ -10,6 +10,20 @@
     <string name="p1vsai">Play HUMAN vs ANDROID</string>
     <string name="statistics">Statistics</string>
     <string name="game_rules">Game rules</string>
-
+    <string name="instructions">This is a gameboard.\nTwo players will challenge each other.\n
+        Every player has 6 bowls and 1 tray.\n
+        Every bowl contains 3 seeds.\n
+        Player's move consists in choosing one of his bowls.\n
+        all the seeds are removed from the selected bowl\n
+        and dropped in the next ones,\n one seed per bowl or tray.\n
+        Following the clockwise direction.\n
+        This is called "seeding phase".\n
+        There are only two rules:\n
+        1) if the active payer ends his seeding phase\n
+        in one of his bowl that was containing no seeds,\n
+        then the last seed plus the ones from the opposite.\n
+        bowl (the opponent\'s one) are moved to his tray.
+        2) if the active player ends his seeding phase1n
+        in his own tray, then he gains an extra turn.\n</string>
 
 </resources>
