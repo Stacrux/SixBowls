@@ -123,7 +123,6 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
                     startGame.setText(namePlayer2 + "'s TURN");
                     startGame.setBackgroundResource(R.drawable.p2_tray);
                     int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
-                    //highlightBowl(chosenBowl);
                     board.seedingPhase( chosenBowl );
                 }
                 setBowlsEnabled(board.toString());
@@ -139,7 +138,6 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
 
             while(board.toString().charAt(0) == '0' && isFinished == -1){
                 int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
-                //highlightBowl(chosenBowl);
                 board.seedingPhase( chosenBowl );
                 setView(board.toString());
                 setBowlsEnabled(board.toString());
@@ -154,33 +152,6 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
         }
     }
 
-    /**
-     * this method highlight a selected bowl
-     * @param chosenBowl
-     */
-    private void highlightBowl(int chosenBowl){
-
-        if(board.toString().charAt(0) == '0'){
-            bowls2.get(chosenBowl).setBackgroundResource(R.drawable.p2_bowl_pressed);
-            animation.run();
-            try {
-                animation.wait(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            bowls2.get(chosenBowl).setBackgroundResource(R.drawable.bowl_p2_bg_selector);
-        }else{
-            bowls1.get(chosenBowl).setBackgroundResource(R.drawable.p1_bowl_pressed);
-            try {
-                wait(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            bowls1.get(chosenBowl).setBackgroundResource(R.drawable.bowl_p1_bg_selector);
-        }
-
-
-    }
 
     /**
      * this method checks the names inserted, a valid

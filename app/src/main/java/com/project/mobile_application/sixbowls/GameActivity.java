@@ -24,10 +24,8 @@ import java.util.ArrayList;
  */
 public class GameActivity extends Activity implements View.OnClickListener {
 
-    Settings settings = new Settings();
     DataBaseHelper database = new DataBaseHelper(this);
 
-    String name=null;
     EditText namePlayer1;
     EditText namePlayer2;
 
@@ -42,7 +40,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     Button startGame;
 
-    Thread animation = new Thread();
 
     /**
      * Oncreate method for this activity, it adds bowls and trays as buttons,
