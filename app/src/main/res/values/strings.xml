@@ -15,8 +15,8 @@
         Every bowl contains 3 seeds.\n
         Player's move consists in choosing one of his bowls.\n
         all the seeds are removed from the selected bowl\n
-        and dropped in the next ones,\n one seed per bowl or tray.\n
-        Following the clockwise direction.\n
+        and dropped in the next ones,\n one seed per bowl or tray\n
+        following the clockwise direction.\n
         This is called "seeding phase".\n
         There are only two rules:\n
         1) if the active payer ends his seeding phase\n
