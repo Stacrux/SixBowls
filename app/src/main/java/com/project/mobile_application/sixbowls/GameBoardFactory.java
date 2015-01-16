@@ -1,6 +1,8 @@
 package com.project.mobile_application.sixbowls;
 
+import com.project.mobile_application.sixbowls.Model.AndroidIntelligence;
 import com.project.mobile_application.sixbowls.Model.Bowl;
+import com.project.mobile_application.sixbowls.Model.StandardGame.AndroidIntelligenceStandard;
 import com.project.mobile_application.sixbowls.Model.StandardGame.BowlStandard;
 import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
@@ -47,8 +49,43 @@ public class GameBoardFactory {
 
             gameboard = new GameBoard(setPlayerOne,setPlayerTwo);
         }
+
+
+        if( configuration.equals("p1vsAndroid")){
+            //Player(identifier expressed as integer)
+            Player playerOne = new Player(0);
+            Player playerTwo = new Player(1);
+            AndroidIntelligence androidIntelligence = new AndroidIntelligenceStandard();
+            ArrayList<Bowl> bowlsPlayerOne = new ArrayList<Bowl>();
+            ArrayList<Bowl> bowlsPlayerTwo = new ArrayList<Bowl>();
+            for (int e = 0; e < Constants.numberOfBowls; e++) {
+                BowlStandard bowl = new BowlStandard(Constants.initialBowlContent, e);
+                bowlsPlayerOne.add(bowl);
+            }
+            for (int e = 0; e < Constants.numberOfBowls; e++) {
+                BowlStandard bowl = new BowlStandard(Constants.initialBowlContent, e);
+                bowlsPlayerTwo.add(bowl);
+            }
+            Tray trayPlayerOne = new TrayStandard(Constants.initialTrayContent);
+            Tray trayPlayerTwo = new TrayStandard(Constants.initialTrayContent);
+
+            Random randomActive = new Random();
+            boolean active = randomActive.nextBoolean();
+
+            PersonalSet setPlayerOne = new PersonalSetStandard(playerOne, bowlsPlayerOne, trayPlayerOne, true);
+            PersonalSet setPlayerTwo = new PersonalSetStandard(playerTwo, bowlsPlayerTwo, trayPlayerTwo, !true);
+
+            gameboard = new GameBoard(setPlayerOne,setPlayerTwo, androidIntelligence);
+        }
+
+
+
+
         return gameboard;
     }
+
+
+
 
 
 }

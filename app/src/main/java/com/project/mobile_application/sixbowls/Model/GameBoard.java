@@ -10,13 +10,27 @@ public class GameBoard {
     private PersonalSet setPlayerOne;
     private PersonalSet setPlayerTwo;
 
+    public AndroidIntelligence getLittleGreen() {
+        return littleGreen;
+    }
+
+    AndroidIntelligence littleGreen;
+
     /**
      * Constructor of the class, it create two sets
      */
-
     public GameBoard(PersonalSet setPlayerOne, PersonalSet setPlayerTwo){
         this.setPlayerOne = setPlayerOne;
         this.setPlayerTwo = setPlayerTwo;
+    }
+
+    /**
+     * Constructor of the class, it create two sets and an artificial intelligence
+     */
+    public GameBoard(PersonalSet setPlayerOne, PersonalSet setPlayerTwo, AndroidIntelligence littleGreen){
+        this.setPlayerOne = setPlayerOne;
+        this.setPlayerTwo = setPlayerTwo;
+        this.littleGreen = littleGreen;
     }
 
 

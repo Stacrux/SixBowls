@@ -48,8 +48,8 @@ public class MainActivity extends Activity{//ActionBarActivity{
                               {
                                   public void onClick(View v)
                                   {
-                                      Intent i=new Intent(MainActivity.this,GameActivity.class);
-                                      i.putExtra("gameType","p1vsAI");
+                                      Intent i=new Intent(MainActivity.this,GameActivityHumanVSAndroid.class);
+                                      i.putExtra("gameType","p1vsAndroid");
                                       startActivity(i);
                                   }
                               }

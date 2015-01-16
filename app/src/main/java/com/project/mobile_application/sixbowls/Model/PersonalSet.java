@@ -9,7 +9,7 @@ public interface PersonalSet {
 
     /**
      * method for moving the seeds within the set, the seeds received as argument must
-     * be dropped in the next bowls, note that every bowl has a numeric identifier. This method must also decide who is
+     * be dropped in the next bowls (from bowlIdentifier), note that every bowl has a numeric identifier. This method must also decide who is
      * the next player that play.
      *
      * @param bowlIdentifier : the bowl where the seeding move starts

@@ -10,11 +10,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.project.mobile_application.sixbowls.Model.AndroidIntelligence;
 import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
 import com.project.mobile_application.sixbowls.Model.MatchResult;
 import com.project.mobile_application.sixbowls.Model.Settings;
-
 
 import java.util.ArrayList;
 
@@ -22,14 +23,14 @@ import java.util.ArrayList;
 /**
  * Created by Martino on 11/01/2015.
  */
-public class GameActivity extends Activity implements View.OnClickListener {
+public class GameActivityHumanVSAndroid extends Activity implements View.OnClickListener {
 
-    Settings settings = new Settings();
+
     DataBaseHelper database = new DataBaseHelper(this);
 
-    String name=null;
+
     EditText namePlayer1;
-    EditText namePlayer2;
+    String namePlayer2;
 
     GameBoard board;
     GameBoardFactory factory = new GameBoardFactory();
@@ -44,6 +45,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     Thread animation = new Thread();
 
+
     /**
      * Oncreate method for this activity, it adds bowls and trays as buttons,
      * sets the listener for the bowls and set which buttons are enabled and which not
@@ -52,7 +54,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_game_h_vs_a);
 
         //set sceen orientation
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -93,9 +95,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         startGame = (Button)findViewById(R.id.start_game);
         startGame.setOnClickListener(this);
         namePlayer1 = (EditText)findViewById(R.id.name_p1);
-        namePlayer2 = (EditText)findViewById(R.id.name_p2);
         namePlayer1.setText("SET PLAYER ONE NAME");
-        namePlayer2.setText("SET PLAYER TWO NAME");
+        namePlayer2 = "LITTLE GREEN";
     }
 
     /**
@@ -112,25 +113,25 @@ public class GameActivity extends Activity implements View.OnClickListener {
             if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") ){
                 namePlayer1.setText("PLAYER_ONE");
             }
-            if(namePlayer2.getText().toString().equals("SET PLAYER TWO NAME")){
-                namePlayer2.setText("PLAYER_TWO");
-            }
             if( noNamingProblems() ){
                 namePlayer1.setEnabled(false);
-                namePlayer2.setEnabled(false);
                 startGame.setEnabled(false);
                 if( board.toString().charAt(0) == '1'){
                     startGame.setText(namePlayer1.getText() + "'s TURN");
                     startGame.setBackgroundResource(R.drawable.p1_tray);
                 }else{
-                    startGame.setText(namePlayer2.getText() + "'s TURN");
+                    startGame.setText(namePlayer2 + "'s TURN");
                     startGame.setBackgroundResource(R.drawable.p2_tray);
+                    int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
+                    //highlightBowl(chosenBowl);
+                    board.seedingPhase( chosenBowl );
                 }
                 setBowlsEnabled(board.toString());
             }
         }
         //otherwise the game has already been started, here is the normal move
         else{
+
             board.seedingPhase(castBowlID( v.getId()));
             int isFinished = board.checkGameOver();
             setView(board.toString());
@@ -138,7 +139,48 @@ public class GameActivity extends Activity implements View.OnClickListener {
             if((isFinished==1)||isFinished==0||isFinished==2){
                 updateDatabase(isFinished);
                 endingAlert(isFinished);}
+
+            while(board.toString().charAt(0) == '0' && isFinished == -1){
+                int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
+                //highlightBowl(chosenBowl);
+                board.seedingPhase( chosenBowl );
+                setView(board.toString());
+                setBowlsEnabled(board.toString());
+                isFinished = board.checkGameOver();
+            }
+
+            if((isFinished==1)||isFinished==0||isFinished==2){
+                updateDatabase(isFinished);
+                endingAlert(isFinished);}
         }
+    }
+
+    /**
+     * this method highlight a selected bowl
+     * @param chosenBowl
+     */
+    private void highlightBowl(int chosenBowl){
+
+        if(board.toString().charAt(0) == '0'){
+            bowls2.get(chosenBowl).setBackgroundResource(R.drawable.p2_bowl_pressed);
+            animation.run();
+            try {
+                animation.wait(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            bowls2.get(chosenBowl).setBackgroundResource(R.drawable.bowl_p2_bg_selector);
+        }else{
+            bowls1.get(chosenBowl).setBackgroundResource(R.drawable.p1_bowl_pressed);
+            try {
+                wait(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            bowls1.get(chosenBowl).setBackgroundResource(R.drawable.bowl_p1_bg_selector);
+        }
+
+
     }
 
     /**
@@ -148,7 +190,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     private boolean noNamingProblems() {
         boolean namesAreAccepted = true;
         String nameP1 = namePlayer1.getText().toString();
-        String nameP2 = namePlayer2.getText().toString();
+        String nameP2 = namePlayer2;
 
         //checks if the two players have inserted the same names
         if( nameP1.equals(nameP2) ){
@@ -167,17 +209,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 namesAreAccepted = false;
                 //alert box stating that names cannot contain blank spaces
                 AlertDialog.Builder alertDlg= new AlertDialog.Builder(this);
-                alertDlg.setMessage(" Names cannot contain blank spaces");
-                alertDlg.setCancelable(true);
-                alertDlg.setPositiveButton("OK", null);
-                alertDlg.create().show();
-            }
-        }
-        for( int e = 0; e < nameP2.length(); e++) {
-            if (nameP2.charAt(e) == ' ') {
-                namesAreAccepted = false;
-                //alert box stating that names cannot contain blank spaces
-                AlertDialog.Builder alertDlg = new AlertDialog.Builder(this);
                 alertDlg.setMessage(" Names cannot contain blank spaces");
                 alertDlg.setCancelable(true);
                 alertDlg.setPositiveButton("OK", null);
@@ -215,16 +246,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 default : break;
             }
         }
-        //saving player two record
-        if( !namePlayer2.getText().toString().equals("PLAYER_TWO") ){
-            Record recordP1 = new Record( namePlayer2.getText().toString(), 0,0,0,0, Integer.parseInt(trayP2.getText().toString()));
-            switch (isFinished){
-                case 0 : database.updateRecord(recordP1, MatchResult.LOST); break;
-                case 1 : database.updateRecord(recordP1, MatchResult.WIN); break;
-                case 2 : database.updateRecord(recordP1, MatchResult.TIE); break;
-                default : break;
-            }
-        }
     }
 
 
@@ -237,7 +258,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
            if( finish == 0) {
                alertDlg.setMessage(namePlayer1.getText().toString() + " is the winner!");
            }else if(finish == 1){
-               alertDlg.setMessage(namePlayer2.getText().toString() + " is the winner!");
+               alertDlg.setMessage(namePlayer2 + " is the winner!");
            }
            else{
                alertDlg.setMessage(" The game ended in a draw ");
@@ -247,7 +268,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Intent i=new Intent(GameActivity.this,MainActivity.class);
+                Intent i=new Intent(GameActivityHumanVSAndroid.this,MainActivity.class);
                 startActivity(i);
             }
         });
@@ -276,7 +297,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }
             else {
                 for(int i=0;i<Constants.numberOfBowls;i++) {
-                    bowls2.get(i).setEnabled(true);
+                    bowls2.get(i).setEnabled(false);
                     bowls1.get(i).setEnabled(false);
                 }
             }
@@ -301,7 +322,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
             startGame.setText(namePlayer1.getText() + "'s TURN");
             startGame.setBackgroundResource(R.drawable.p1_tray);
         }else{
-            startGame.setText(namePlayer2.getText() + "'s TURN");
+            startGame.setText(namePlayer2 + "'s TURN");
             startGame.setBackgroundResource(R.drawable.p2_tray);
         }
 

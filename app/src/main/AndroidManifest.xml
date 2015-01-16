@@ -21,6 +21,10 @@
             android:label="@string/app_name">
         </activity>
         <activity
+            android:name=".GameActivityHumanVSAndroid"
+            android:label="@string/app_name">
+        </activity>
+        <activity
             android:name=".RecordsActivity"
             android:label="@string/records" >
         </activity>
