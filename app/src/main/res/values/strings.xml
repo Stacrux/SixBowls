@@ -13,7 +13,7 @@
     <string name="instructions">This is a gameboard.\nTwo players will challenge each other.\n
         Every player has 6 bowls and 1 tray.\n
         Every bowl contains 3 seeds.\n
-        Player's move consists in choosing one of his bowls.\n
+        Player\'s move consists in choosing one of his bowls.\n
         all the seeds are removed from the selected bowl\n
         and dropped in the next ones,\n one seed per bowl or tray\n
         following the clockwise direction.\n
