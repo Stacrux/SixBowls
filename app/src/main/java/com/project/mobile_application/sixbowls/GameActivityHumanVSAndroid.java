@@ -243,9 +243,7 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
         alertDlg.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                Intent i=new Intent(GameActivityHumanVSAndroid.this,MainActivity.class);
-                startActivity(i);
+finish();
             }
         });
 
