@@ -10,14 +10,15 @@
     <string name="p1vsai">Play HUMAN vs ANDROID</string>
     <string name="statistics">Statistics</string>
     <string name="game_rules">Game rules</string>
-    <string name="instructions">This is a gameboard.\nTwo players will challenge each other.\n
+    <string name="instructions">This is a game board.\n
+        Two players will challenge each other.\n
         Every player has 6 bowls and 1 tray.\n
         Every bowl contains 3 seeds.\n
         Player\'s move consists in choosing one of his bowls.\n
         all the seeds are removed from the selected bowl\n
         and dropped in the next ones,\n one seed per bowl or tray\n
         following the clockwise direction.\n
-        This is called "seeding phase".\n
+        This is called seeding phase.\n
         There are only two rules:\n
         1) if the active payer ends his seeding phase\n
         in one of his bowl that was containing no seeds,\n

@@ -245,9 +245,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         alertDlg.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                Intent i=new Intent(GameActivity.this,MainActivity.class);
-                startActivity(i);
+                finish();
             }
         });
 

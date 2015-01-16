@@ -72,8 +72,8 @@ public class GameBoardFactory {
             Random randomActive = new Random();
             boolean active = randomActive.nextBoolean();
 
-            PersonalSet setPlayerOne = new PersonalSetStandard(playerOne, bowlsPlayerOne, trayPlayerOne, true);
-            PersonalSet setPlayerTwo = new PersonalSetStandard(playerTwo, bowlsPlayerTwo, trayPlayerTwo, !true);
+            PersonalSet setPlayerOne = new PersonalSetStandard(playerOne, bowlsPlayerOne, trayPlayerOne, active);
+            PersonalSet setPlayerTwo = new PersonalSetStandard(playerTwo, bowlsPlayerTwo, trayPlayerTwo, !active);
 
             gameboard = new GameBoard(setPlayerOne,setPlayerTwo, androidIntelligence);
         }
