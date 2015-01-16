@@ -43,9 +43,6 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
 
     Button startGame;
 
-    Thread animation = new Thread();
-
-
     /**
      * Oncreate method for this activity, it adds bowls and trays as buttons,
      * sets the listener for the bowls and set which buttons are enabled and which not
