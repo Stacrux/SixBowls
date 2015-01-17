@@ -61,7 +61,7 @@ public class PersonalSetStandard implements PersonalSet {
     public boolean isEmptySetBowls(){
         boolean emptySetBowls = true;
         for(Bowl bowl : this.bowls){
-            if(bowl.getNum_seeds() > 0){
+            if(bowl.getNumSeeds() > 0){
                 emptySetBowls = false;
             }
         }
@@ -78,8 +78,8 @@ public class PersonalSetStandard implements PersonalSet {
         int seedMoving = 0;
         for (Bowl bowl : this.bowls) {
             if (bowl.getBowlIdentifier() == bowlIdentifier) {
-                seedMoving = bowl.getNum_seeds();
-                bowl.remove_whole_content();
+                seedMoving = bowl.getNumSeeds();
+                bowl.removeWholeContent();
             }
         }
         return seedMoving;
@@ -109,7 +109,7 @@ public class PersonalSetStandard implements PersonalSet {
      */
     @Override
     public void moveDirectlyToTray(int seedsMoving) {
-        tray.increase_seeds_count(seedsMoving);
+        tray.increaseSeedsCount(seedsMoving);
     }
 
 
@@ -149,13 +149,13 @@ public class PersonalSetStandard implements PersonalSet {
             //drop one seed inside each NEXT bowl
             for(int e  = 0 ; e < Constants.numberOfBowls; e++){
                 if( bowls.get(e).getBowlIdentifier() > bowlIdentifier && seedsMovingTemp > 0){
-                    bowls.get(e).increment_seed_count(1);
+                    bowls.get(e).incrementSeedCount(1);
                     seedsMovingTemp -= 1;
                     //if there are no more seeds to be dropped the last bowl filled id is saved
                     //let's check also if the last filled bowl contains just 1 seed, in that case
                     //it means that before contained ZERO seeds. This need to be done only for the
                     //active Set
-                    if(seedsMovingTemp == 0 && bowls.get(e).getNum_seeds() == 1){
+                    if(seedsMovingTemp == 0 && bowls.get(e).getNumSeeds() == 1){
                         lastBowlIdentifier = e;
                         lastBowlEmpty = true;
                     }
@@ -163,7 +163,7 @@ public class PersonalSetStandard implements PersonalSet {
             }
             //and in the tray as well (only if any seed is available)
             if(seedsMovingTemp > 0){
-                tray.increase_seeds_count(1);
+                tray.increaseSeedsCount(1);
                 seedsMovingTemp -= 1;
                 if(seedsMovingTemp == 0){ turnSwitcher = true; }
             }
@@ -173,7 +173,7 @@ public class PersonalSetStandard implements PersonalSet {
             //let's drop the seeds in the bowls
             for(int e  = 0 ; e < Constants.numberOfBowls; e++){
                 if( bowls.get(e).getBowlIdentifier() >= bowlIdentifier && seedsMovingTemp > 0){
-                    bowls.get(e).increment_seed_count(1);
+                    bowls.get(e).incrementSeedCount(1);
                     seedsMovingTemp -= 1;
                 }
             }
@@ -198,7 +198,7 @@ public class PersonalSetStandard implements PersonalSet {
             configuration += "0";
         }
         for(int e = 0; e < Constants.numberOfBowls; e++){
-            configuration = configuration + "B" + Integer.toString(this.bowls.get(e).getNum_seeds());
+            configuration = configuration + "B" + Integer.toString(this.bowls.get(e).getNumSeeds());
         }
         configuration = configuration + "T" + Integer.toString(this.tray.getSeeds());
         return configuration;

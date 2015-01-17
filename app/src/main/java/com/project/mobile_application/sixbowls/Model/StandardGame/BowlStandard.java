@@ -11,10 +11,10 @@ public class BowlStandard implements Bowl {
     protected int number_of_seeds;
     private int bowl_identifier;
 
-    public BowlStandard(int num_seeds, int bowl_identifier)
+    public BowlStandard(int numSeeds, int bowlIdentifier)
     {
-        this.bowl_identifier = bowl_identifier;
-        this.number_of_seeds = num_seeds;
+        this.bowl_identifier = bowlIdentifier;
+        this.number_of_seeds = numSeeds;
     }
 
     /**
@@ -28,7 +28,7 @@ public class BowlStandard implements Bowl {
      * @return : the number of seeds contained
      */
     @Override
-    public int getNum_seeds() {
+    public int getNumSeeds() {
         return number_of_seeds;
     }
     /**
@@ -36,7 +36,7 @@ public class BowlStandard implements Bowl {
      * @param amount : the number of seeds that the caller wants to put in the bowl
      */
     @Override
-    public void increment_seed_count(int amount) {
+    public void incrementSeedCount(int amount) {
         number_of_seeds += amount;
     }
 
@@ -44,7 +44,7 @@ public class BowlStandard implements Bowl {
      * method for removing all the seeds inside a bowl, set the content to zero
      */
     @Override
-    public void remove_whole_content() {
+    public void removeWholeContent() {
         number_of_seeds = 0;
     }
 
