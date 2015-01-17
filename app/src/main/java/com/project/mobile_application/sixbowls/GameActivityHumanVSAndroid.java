@@ -170,6 +170,11 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
                 isFinished = board.checkGameOver();
                 setView(board.toString());
                 setBowlsEnabled(board.toString());
+                if((isFinished==1)||isFinished==0||isFinished==2){
+                    updateDatabase(isFinished);
+                    endingAlert(isFinished);
+                    setBowlsEnabled("ALL DISABLED");
+                }
                 if(board.toString().charAt(0) == '0'){
                     int nextChosenBowl = board.getLittleGreen().chooseBowl(board.toString());
                     bowls2.get(nextChosenBowl).callOnClick();
@@ -397,20 +402,5 @@ finish();
         return selectedBowl;
     }
 
-    private void highlightSelectedBowl(final int passedBowl){
-        for(Button bowl : bowls2){
-            bowl.setBackgroundResource(R.drawable.bowl_p2_bg_selector);
-        }
-        bowls2.get(passedBowl).setBackgroundResource(R.drawable.p2_bowl_pressed);
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                bowls2.get(passedBowl).setBackgroundResource(R.drawable.bowl_p2_bg_selector);
-                setView(board.toString());
-                setBowlsEnabled(board.toString());
-            }
-        }, 1000);
-
-
-    }
 
 }
