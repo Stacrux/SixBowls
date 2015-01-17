@@ -151,7 +151,7 @@ public class GameBoard {
      */
     @Override
     public String toString() {
-        String configuration = new String("");
+        String configuration = new String();
 
         configuration=configuration+setPlayerOne.toString();
         configuration=configuration+"Z";

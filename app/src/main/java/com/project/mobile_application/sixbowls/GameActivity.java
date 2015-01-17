@@ -3,7 +3,6 @@ package com.project.mobile_application.sixbowls;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import com.project.mobile_application.sixbowls.Model.Constants;
 import com.project.mobile_application.sixbowls.Model.GameBoard;
 import com.project.mobile_application.sixbowls.Model.MatchResult;
-import com.project.mobile_application.sixbowls.Model.Settings;
 
 
 import java.util.ArrayList;

@@ -13,10 +13,7 @@ public class Player {
         this.name = name;
     }
 
-    private String name = new String();
-    public int getTurnIdentifier() {
-        return turnIdentifier;
-    }
+    private String name;
     private int turnIdentifier;
     public Player(int turnIdentifier){
         this.turnIdentifier = turnIdentifier;

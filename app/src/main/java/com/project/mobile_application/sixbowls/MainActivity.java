@@ -24,7 +24,6 @@ public class MainActivity extends Activity{//ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         //set screen orintation into landscape mode
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //hide statusbar

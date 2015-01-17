@@ -34,8 +34,7 @@ public class Alert extends DialogFragment {
             }
         });
 
-        Dialog dialog=builder.create();
-        return dialog;
+        return builder.create();
      }
 
 
