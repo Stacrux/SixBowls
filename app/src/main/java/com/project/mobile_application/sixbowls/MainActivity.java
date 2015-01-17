@@ -18,6 +18,7 @@ public class MainActivity extends Activity{//ActionBarActivity{
     Button buttonP1VsAi;
     Button buttonStats;
     Button buttonRules;
+    Button buttonExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,15 @@ public class MainActivity extends Activity{//ActionBarActivity{
                                        }
         );
 
+        buttonExit = (Button)findViewById(R.id.button_exit);
+        buttonExit.setOnClickListener(new View.OnClickListener()
+                                       {
+                                           public void onClick(View v)
+                                           {
+                                               finish();
+                                           }
+                                       }
+        );
     }
 
 
