@@ -1,10 +1,14 @@
 package com.project.mobile_application.sixbowls;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -21,22 +25,25 @@ import java.util.ArrayList;
 public class GameActivityHumanVSAndroid extends Activity implements View.OnClickListener {
 
 
-    DataBaseHelper database = new DataBaseHelper(this);
+    private DataBaseHelper database = new DataBaseHelper(this);
 
 
-    EditText namePlayer1;
-    String namePlayer2;
+    private EditText namePlayer1;
+    private String namePlayer2;
 
-    GameBoard board;
-    GameBoardFactory factory = new GameBoardFactory();
+    private GameBoard board;
+    private GameBoardFactory factory = new GameBoardFactory();
 
-    ArrayList<Button> bowls1;
-    ArrayList<Button> bowls2;
+    private ArrayList<Button> bowls1;
+    private ArrayList<Button> bowls2;
 
-    Button trayP1;
-    Button trayP2;
+    private Button trayP1;
+    private Button trayP2;
 
-    Button startGame;
+    private Button startGame;
+
+    private Handler handler = new Handler();
+    int isFinished  = -1;
 
     /**
      * Oncreate method for this activity, it adds bowls and trays as buttons,
@@ -100,6 +107,7 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
      */
     @Override
     public void onClick(View v) {
+        int chosenBowl;
         //if the game is not started yet let's make the preparations
         if( v.getId() == R.id.start_game ){
             if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") ){
@@ -114,30 +122,31 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
                 }else{
                     startGame.setText(namePlayer2 + "'s TURN");
                     startGame.setBackgroundResource(R.drawable.p2_tray);
-                    while(board.toString().charAt(0) == '0'){
-                        int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
-                        board.seedingPhase( chosenBowl );
-                        setView(board.toString());
-                        setBowlsEnabled(board.toString());
-                    }
+                        for(Button bowl : bowls2){
+                            bowl.setBackgroundResource(R.drawable.bowl_p2_bg_selector);
+                        }
+                        chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
+                        bowls2.get(chosenBowl).setBackgroundResource(R.drawable.p2_bowl_pressed);
+                        makeAutomaticMove(chosenBowl);
                 }
                 setBowlsEnabled(board.toString());
             }
         }
         //otherwise the game has already been started, here is the normal move
         else{
-
-            board.seedingPhase(castBowlID( v.getId()));
-            int isFinished = board.checkGameOver();
-            setView(board.toString());
-            setBowlsEnabled(board.toString());
-
-            while(board.toString().charAt(0) == '0' && isFinished == -1){
-                int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
-                board.seedingPhase( chosenBowl );
+            if(board.toString().charAt(0) == '1'){
+                board.seedingPhase(castBowlID( v.getId()));
+                isFinished = board.checkGameOver();
                 setView(board.toString());
                 setBowlsEnabled(board.toString());
-                isFinished = board.checkGameOver();
+            }
+            if(board.toString().charAt(0) == '0'){
+                for(Button bowl : bowls2){
+                    bowl.setBackgroundResource(R.drawable.bowl_p2_bg_selector);
+                }
+                chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
+                bowls2.get(chosenBowl).setBackgroundResource(R.drawable.p2_bowl_pressed);
+                makeAutomaticMove(chosenBowl);
             }
 
             if((isFinished==1)||isFinished==0||isFinished==2){
@@ -146,6 +155,29 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
                 setBowlsEnabled("ALL DISABLED");
             }
         }
+    }
+
+    /**
+     * this method make the move for the android intelligence handling the highliting of the buttons
+     * @param chosenBowl : the bowl that the android intelligence has chosen
+     */
+    private void makeAutomaticMove(final int chosenBowl) {
+        handler.postDelayed(new Runnable() {
+            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+            public void run() {
+                bowls2.get(chosenBowl).setBackgroundResource(R.drawable.bowl_p2_bg_selector);
+                board.seedingPhase( chosenBowl );
+                isFinished = board.checkGameOver();
+                setView(board.toString());
+                setBowlsEnabled(board.toString());
+                if(board.toString().charAt(0) == '0'){
+                    int nextChosenBowl = board.getLittleGreen().chooseBowl(board.toString());
+                    bowls2.get(nextChosenBowl).callOnClick();
+                }
+            }
+        }, 1200);
+
+
     }
 
 
@@ -363,6 +395,22 @@ finish();
             selectedBowl = 5;
         }
         return selectedBowl;
+    }
+
+    private void highlightSelectedBowl(final int passedBowl){
+        for(Button bowl : bowls2){
+            bowl.setBackgroundResource(R.drawable.bowl_p2_bg_selector);
+        }
+        bowls2.get(passedBowl).setBackgroundResource(R.drawable.p2_bowl_pressed);
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                bowls2.get(passedBowl).setBackgroundResource(R.drawable.bowl_p2_bg_selector);
+                setView(board.toString());
+                setBowlsEnabled(board.toString());
+            }
+        }, 1000);
+
+
     }
 
 }
