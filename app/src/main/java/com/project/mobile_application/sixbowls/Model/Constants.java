@@ -9,5 +9,5 @@ public class Constants {
     public static int initialTrayContent =0;
     public static int numberOfPlayers =2;
     public static int numberOfBowls =6;
-    public static int artificialIntelligenceSpeed = 700;//millis
+    public static int artificialIntelligenceSpeed = 850;//millis
 }
