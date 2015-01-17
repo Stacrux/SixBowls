@@ -119,8 +119,12 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
                 }else{
                     startGame.setText(namePlayer2 + "'s TURN");
                     startGame.setBackgroundResource(R.drawable.p2_tray);
-                    int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
-                    board.seedingPhase( chosenBowl );
+                    while(board.toString().charAt(0) == '0'){
+                        int chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
+                        board.seedingPhase( chosenBowl );
+                        setView(board.toString());
+                        setBowlsEnabled(board.toString());
+                    }
                 }
                 setBowlsEnabled(board.toString());
             }
