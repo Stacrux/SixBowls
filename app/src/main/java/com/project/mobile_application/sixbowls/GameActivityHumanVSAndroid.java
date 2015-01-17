@@ -136,23 +136,22 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
         else{
             if(board.toString().charAt(0) == '1'){
                 board.seedingPhase(castBowlID( v.getId()));
-                isFinished = board.checkGameOver();
                 setView(board.toString());
                 setBowlsEnabled(board.toString());
+                isFinished = board.checkGameOver();
+                if((isFinished==1)||isFinished==0||isFinished==2){
+                    updateDatabase(isFinished);
+                    endingAlert(isFinished);
+                    setBowlsEnabled("ALL DISABLED");
+                }
             }
-            if(board.toString().charAt(0) == '0'){
+            if(board.toString().charAt(0) == '0' && isFinished == -1){
                 for(Button bowl : bowls2){
                     bowl.setBackgroundResource(R.drawable.bowl_p2_bg_selector);
                 }
                 chosenBowl = board.getLittleGreen().chooseBowl(board.toString());
                 bowls2.get(chosenBowl).setBackgroundResource(R.drawable.p2_bowl_pressed);
                 makeAutomaticMove(chosenBowl);
-            }
-
-            if((isFinished==1)||isFinished==0||isFinished==2){
-                updateDatabase(isFinished);
-                endingAlert(isFinished);
-                setBowlsEnabled("ALL DISABLED");
             }
         }
     }
@@ -170,17 +169,17 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
                 isFinished = board.checkGameOver();
                 setView(board.toString());
                 setBowlsEnabled(board.toString());
-                if((isFinished==1)||isFinished==0||isFinished==2){
+                if(board.toString().charAt(0) == '0' && isFinished == -1){
+                    int nextChosenBowl = board.getLittleGreen().chooseBowl(board.toString());
+                    bowls2.get(nextChosenBowl).callOnClick();
+                }
+                else if( isFinished != -1){
                     updateDatabase(isFinished);
                     endingAlert(isFinished);
                     setBowlsEnabled("ALL DISABLED");
                 }
-                if(board.toString().charAt(0) == '0'){
-                    int nextChosenBowl = board.getLittleGreen().chooseBowl(board.toString());
-                    bowls2.get(nextChosenBowl).callOnClick();
-                }
             }
-        }, 1200);
+        }, Constants.artificialIntelligenceSpeed);
 
 
     }
