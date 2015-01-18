@@ -226,7 +226,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
 
     /**
-     * this method shows an alert displayng who won the match and getting the users to the initial activity
+     * this method shows an alert displaying who won the match and getting the users to the initial activity
      * @param finish : the result of the game, 0 for player one winning, 1 for player two winning, 2 for a tie
      */
     private void endingAlert(int finish) {
