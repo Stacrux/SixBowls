@@ -105,10 +105,10 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //if the game is not started yet let's make the preparations
         if( v.getId() == R.id.start_game ){
             if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") ){
-                namePlayer1.setText("PLAYER_ONE");
+                namePlayer1.setText("BLUE");
             }
             if(namePlayer2.getText().toString().equals("SET PLAYER TWO NAME")){
-                namePlayer2.setText("PLAYER_TWO");
+                namePlayer2.setText("RED");
             }
             if( noNamingProblems() ){
                 namePlayer1.setEnabled(false);
@@ -203,7 +203,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
      */
     private void updateDatabase(int isFinished) {
         //saving player one records
-        if( !namePlayer1.getText().toString().equals("PLAYER_ONE") ){
+        if( !namePlayer1.getText().toString().equals("BLUE") ){
             Record recordP1 = new Record( namePlayer1.getText().toString(), 0,0,0,0, Integer.parseInt(trayP1.getText().toString()));
             switch (isFinished){
                 case 0 : database.updateRecord(recordP1, MatchResult.WIN); break;
@@ -213,7 +213,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }
         }
         //saving player two record
-        if( !namePlayer2.getText().toString().equals("PLAYER_TWO") ){
+        if( !namePlayer2.getText().toString().equals("RED") ){
             Record recordP2 = new Record( namePlayer2.getText().toString(), 0,0,0,0, Integer.parseInt(trayP2.getText().toString()));
             switch (isFinished){
                 case 0 : database.updateRecord(recordP2, MatchResult.LOST); break;

@@ -8,7 +8,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -111,7 +110,7 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
         //if the game is not started yet let's make the preparations
         if( v.getId() == R.id.start_game ){
             if( namePlayer1.getText().toString().equals("SET PLAYER ONE NAME") ){
-                namePlayer1.setText("PLAYER_ONE");
+                namePlayer1.setText("BLUE");
             }
             if( noNamingProblems() ){
                 namePlayer1.setEnabled(false);
@@ -239,7 +238,7 @@ public class GameActivityHumanVSAndroid extends Activity implements View.OnClick
      */
     private void updateDatabase(int isFinished) {
         //saving player one records
-        if( !namePlayer1.getText().toString().equals("PLAYER_ONE") ){
+        if( !namePlayer1.getText().toString().equals("BLUE") ){
             Record recordP1 = new Record( namePlayer1.getText().toString(), 0,0,0,0, Integer.parseInt(trayP1.getText().toString()));
             switch (isFinished){
                 case 0 : database.updateRecord(recordP1, MatchResult.WIN); break;

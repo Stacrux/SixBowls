@@ -84,7 +84,11 @@
         android:layout_toRightOf="@+id/button3"
         android:layout_toLeftOf="@+id/button4"
         android:layout_toStartOf="@+id/button4"
-        android:layout_above="@+id/space2" />
+        android:layout_above="@+id/space2"
+        android:elegantTextHeight="true"
+        android:textAlignment="inherit"
+        android:textStyle="italic"
+        android:gravity="center" />
 
     <Space
         android:layout_width="20px"

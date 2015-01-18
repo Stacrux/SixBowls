@@ -28,6 +28,6 @@
         The game is over when one line of bowls is empty,\n
         in that moment the remaining seeds are moved\n
         to the player\'s tray and the player with\n
-        more seeds in his tray is the winner.</string>
+        more seeds in his tray is the winner.\nTHE FIRST PLAYER TO MOVE IS CHOSEN RANDOMLY</string>
 
 </resources>
