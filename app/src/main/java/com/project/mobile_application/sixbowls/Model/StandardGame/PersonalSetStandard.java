@@ -92,7 +92,10 @@ public class PersonalSetStandard implements PersonalSet {
      */
     @Override
     public boolean isLastBowlEmpty() {
-        return lastBowlEmpty;
+
+        boolean returningValue = lastBowlEmpty;
+        lastBowlEmpty = false;
+        return returningValue;
     }
 
     /**
