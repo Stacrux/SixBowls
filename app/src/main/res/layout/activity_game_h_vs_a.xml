@@ -313,11 +313,29 @@
             android:layout_gravity="center_horizontal" />
 
         <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="New Button"
+            android:id="@+id/button5"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible" />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="START GAME"
             android:id="@+id/start_game"
             android:layout_gravity="center_horizontal" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="New Button"
+            android:id="@+id/button6"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible" />
 
         <EditText
             android:layout_width="wrap_content"
